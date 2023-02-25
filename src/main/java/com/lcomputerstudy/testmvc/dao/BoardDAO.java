@@ -33,30 +33,32 @@ public class BoardDAO {
 		ResultSet rs = null;
 		ArrayList<Board> list = null;
 		int pageNum = pagination.getPageNum();
-		Search search = null;
+		Search search = pagination.getSearch();		//pagination에서 search를 가져오기
 		
 		String where = "";
 		
 		if(search == null) {
+			where = "";
 			search = new Search();
 			search.setTcw("none");
-		}
+			search.setSearchbox("");
+		} else {			
+			switch (search.getTcw()) {
+				case "title":
+					where = "WHERE b_title like ? \n";
+					break;
+				case "content":
+					where = "WHERE b_content like ? \n";
+					break;
+				case "writer":
+					where = "WHERE b_writer like ? \n";
+					break;
+				case "none":
+					where = "";
+					break;
+			}
+		}			
 		
-		switch (search.getTcw()) {
-			case "title":
-				where = "WHERE b_title like ? \n";
-				break;
-			case "content":
-				where = "WHERE b_content like ? \n";
-				break;
-			case "writer":
-				where = "WHERE b_writer like ? \n";
-				break;
-			case "none":
-				where = "";
-				break;
-		}
-						
 		try {
 			conn = DBConnection.getConnection();
 			// String query = "select * from user limit ?,3";
@@ -79,7 +81,10 @@ public class BoardDAO {
 			
 			while(rs.next()) {
 				Board board = new Board();
-				board.setRownum(rs.getInt("ROWNUM"));
+				int rownum = rs.getInt("ROWNUM");
+				if (!rs.wasNull()) { // rs 객체가 null이 아닌 경우에만 getInt 메소드를 호출합니다.
+					board.setRownum(rownum);
+				}
 				board.setB_idx(rs.getInt("b_idx"));
 				board.setB_title(rs.getString("b_title"));
 				board.setB_content(rs.getString("b_content"));
