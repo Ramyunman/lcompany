@@ -42,8 +42,9 @@ public class BoardDAO {
 			search = new Search();
 			search.setTcw("none");
 			search.setSearchbox("");
-		} else {			
-			switch (search.getTcw()) {
+		} else {		
+			String tcw = search.getTcw();
+			switch (tcw != null ? tcw : "none") {
 				case "title":
 					where = "WHERE b_title like ? \n";
 					break;
@@ -97,6 +98,7 @@ public class BoardDAO {
 				
 				list.add(board);
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();		
 		} finally {
