@@ -35,16 +35,10 @@ public class BoardDAO {
 		int pageNum = pagination.getPageNum();
 		Search search = pagination.getSearch();		//pagination에서 search를 가져오기
 		
-		String where = "";
-		
-		if(search == null) {
-			where = "";
-			search = new Search();
-			search.setTcw("none");
-			search.setSearchbox("");
-		} else {		
+		String where = null;
+		if(search != null) {	
 			String tcw = search.getTcw();
-			switch (tcw != null ? tcw : "none") {
+			switch (tcw != null ? tcw : "all") {
 				case "title":
 					where = "WHERE b_title like ? \n";
 					break;
@@ -54,11 +48,9 @@ public class BoardDAO {
 				case "writer":
 					where = "WHERE b_writer like ? \n";
 					break;
-				case "none":
-					where = "";
-					break;
+					// "all"인 경우 where 구문을 생성하지 않는다.
 			}
-		}			
+		}	
 		
 		try {
 			conn = DBConnection.getConnection();
@@ -70,8 +62,10 @@ public class BoardDAO {
 					.append("INNER JOIN      (SELECT @rownum := (SELECT COUNT(*)-?+1 FROM board t_board)) tc ON 1=1 \n")
 					.append(where)
 					.append("ORDER BY b_group DESC, b_order ASC\n")
-					.append("LIMIT          ?, ?\n")
+					.append("LIMIT          ?, ? \n")
 					.toString();
+			
+			
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, pageNum);
 			pstmt.setString(2, "%"+search.getSearchbox()+"%");		//추가
