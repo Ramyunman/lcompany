@@ -79,7 +79,6 @@
 					
 				<td>${board.b_content}</td>
 			
-				
 			</tr>
 		</c:forEach>	
 	</table>
