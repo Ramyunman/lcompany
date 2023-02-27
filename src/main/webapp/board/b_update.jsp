@@ -20,7 +20,7 @@
 	<p> 작성일자 : <input type="text" name="date" value = ${board.b_date }></p>
 	
 	<p> <input type="submit" value="수정하기"></p>
-	<a href="/lcomp1/board-list.do"> 목록으로 </a>
+	<a href="/lcompany/board-list.do"> 목록으로 </a>
 </form>
 
 </body>

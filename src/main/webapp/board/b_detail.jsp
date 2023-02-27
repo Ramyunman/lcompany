@@ -58,14 +58,14 @@
 	
 	<tr style="height:50px;">
 			<td style="border:none;">
-				<a href="/lcomp1/board-update.do?b_idx=${board.b_idx}" style="width:70%;font-weight:700;background-color:#818181;color:#fff;">수정</a>
+				<a href="/lcompany/board-update.do?b_idx=${board.b_idx}" style="width:70%;font-weight:700;background-color:#818181;color:#fff;">수정</a>
 			</td>
 			<td style="border:none;">
-				<a href="/lcomp1/board-delete.do?b_idx=${board.b_idx}" style="width:70%;font-weight:700;background-color:red;color:#fff;">삭제</a>
+				<a href="/lcompany/board-delete.do?b_idx=${board.b_idx}" style="width:70%;font-weight:700;background-color:red;color:#fff;">삭제</a>
 			</td>
 		</tr>
 	</table>
-	<a href="/lcomp1/board-reply-insert.do?b_group=${board.b_group}&b_order=${board.b_order}&b_depth=${board.b_depth}">답글 등록</a>
+	<a href="/lcompany/board-reply-insert.do?b_group=${board.b_group}&b_order=${board.b_order}&b_depth=${board.b_depth}">답글 등록</a>
 	
 <%--		
 	<h4> >> 댓글 등록 </h4>
@@ -160,7 +160,7 @@ $(document).on('click', '.o_btnComment-register', function () {		//원댓글 등
 	
 	$.ajax({
 		method : 'POST',
-		url : "/lcomp1/comment-original-insert-process.do",
+		url : "/lcompany/comment-original-insert-process.do",
 		data : { b_idx:bIdx, c_content:cContent }
 	})
 	.done(function( msg ) {
@@ -197,7 +197,7 @@ $(document).on('click', '.btnComment-register', function (){		//대댓글 등록
 	
 	$.ajax({
 		  method: "POST",
-		  url: "/lcomp1/comment-commentInComments.do",
+		  url: "/lcompany/comment-commentInComments.do",
 		  data: { b_idx:bIdx, c_content:cContent, c_group:cGroup, c_order:cOrder, c_depth:cDepth }
 	})
 	.done(function( msg ) {
@@ -227,7 +227,7 @@ $(document).on('click', '.btnComment-Update-register', function () {	//대댓글
 	
 	$.ajax({
 		  method: "POST",
-		  url: "/lcomp1/comment-updateComment.do",
+		  url: "/lcompany/comment-updateComment.do",
 		  data: { b_idx:bIdx, c_content:cContent, c_group:cGroup, c_order:cOrder, c_depth:cDepth }
 	})
 	.done(function( msg ) {
@@ -251,7 +251,7 @@ $(document).on('click', '.btnComment-Delete', function () {				//대댓글 삭�
 	
 	$.ajax({
 		method: "POST",
-		url: "/lcomp1/comment-deleteComment.do",
+		url: "/lcompany/comment-deleteComment.do",
 		data: { b_idx:bIdx, c_group:cGroup, c_order:cOrder, c_depth:cDepth }
 	})
 	.done(function( msg ) {

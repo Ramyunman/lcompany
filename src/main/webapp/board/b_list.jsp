@@ -61,7 +61,7 @@
 		</tr>
 		<c:forEach items="${list}" var="board" varStatus="status">
 			<tr>
-				<td><a href="/lcomp1/board-detail.do?b_idx=${board.b_idx}">${board.rownum}</a></td>
+				<td><a href="/lcompany/board-detail.do?b_idx=${board.b_idx}">${board.rownum}</a></td>
 				<c:choose>
 					<c:when test="${board.b_depth > 0  }">
 						<td style="text-align: left;"> 
@@ -130,7 +130,7 @@
 	
 	<form action="board-list.do" name="search" method="get">
 		<select name="tcw">
-			<option value="all"> 전체 </option>
+			<option value="select"> 선택 </option>
 			<option value="title"> 제목 </option>
 			<option value="content"> 내용 </option>
 			<option value="writer"> 작성자 </option>

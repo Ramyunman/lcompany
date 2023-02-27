@@ -48,9 +48,6 @@ public class BoardDAO {
 				case "writer":
 					where = "WHERE b_writer like ? \n";
 					break;
-				case "all":
-					where = "WHERE b_title like ? or b_content like ? or b_writer like ?";
-					break;
 			} 
 		} else {
 			where = "";
@@ -69,41 +66,35 @@ public class BoardDAO {
 					.append("LIMIT          ?, ? \n")
 					.toString();
 			
-			
 			pstmt = conn.prepareStatement(query);
-//			pstmt.setInt(1, pageNum);
-//			pstmt.setString(2, "%"+search.getSearchbox()+"%");		//추가
-//			pstmt.setInt(3, pageNum);
-//			pstmt.setInt(4, Pagination.perPage);
-				String channel = search.getTcw();
-				switch (channel != null ? channel : "none") {
-					case "title" :
-						pstmt.setInt(1, pageNum);
-						pstmt.setString(2, "%"+search.getSearchbox()+"%");		//추가
-						pstmt.setInt(3, pageNum);
-						pstmt.setInt(4, Pagination.perPage);
-						break;
-					case "content" :
-						pstmt.setInt(1, pageNum);
-						pstmt.setString(2, "%"+search.getSearchbox()+"%");		//추가
-						pstmt.setInt(3, pageNum);
-						pstmt.setInt(4, Pagination.perPage);
-						break;
-					case "writer" :
-						pstmt.setInt(1, pageNum);
-						pstmt.setString(2, "%"+search.getSearchbox()+"%");		//추가
-						pstmt.setInt(3, pageNum);
-						pstmt.setInt(4, Pagination.perPage);
-						break;
-					case "none":
-						pstmt.setInt(1, pageNum);
-						pstmt.setInt(2, pageNum);
-						pstmt.setInt(3, Pagination.perPage);
-						break;
-					
-				} 
 			
-			
+			String channel = search.getTcw();
+			switch (channel != null ? channel : "none") {
+				case "title" :
+					pstmt.setInt(1, pageNum);
+					pstmt.setString(2, "%"+search.getSearchbox()+"%");		//추가
+					pstmt.setInt(3, pageNum);
+					pstmt.setInt(4, Pagination.perPage);
+					break;
+				case "content" :
+					pstmt.setInt(1, pageNum);
+					pstmt.setString(2, "%"+search.getSearchbox()+"%");		//추가
+					pstmt.setInt(3, pageNum);
+					pstmt.setInt(4, Pagination.perPage);
+					break;
+				case "writer" :
+					pstmt.setInt(1, pageNum);
+					pstmt.setString(2, "%"+search.getSearchbox()+"%");		//추가
+					pstmt.setInt(3, pageNum);
+					pstmt.setInt(4, Pagination.perPage);
+					break;
+				case "none":
+					pstmt.setInt(1, pageNum);
+					pstmt.setInt(2, pageNum);
+					pstmt.setInt(3, Pagination.perPage);
+					break;
+			} 
+						
 			rs = pstmt.executeQuery();
 			list = new ArrayList<Board>();
 			

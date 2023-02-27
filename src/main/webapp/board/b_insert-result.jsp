@@ -8,6 +8,6 @@
 </head>
 <body>
 <h1>저장 완료</h1>
-<a href="/lcomp1/board-list.do">돌아가기</a>
+<a href="/lcompany/board-list.do">돌아가기</a>
 </body>
 </html>
