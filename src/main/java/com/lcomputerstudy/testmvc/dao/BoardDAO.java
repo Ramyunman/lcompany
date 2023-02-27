@@ -35,10 +35,10 @@ public class BoardDAO {
 		int pageNum = pagination.getPageNum();
 		Search search = pagination.getSearch();		//pagination에서 search를 가져오기
 		
-		String where = null;
+		String where = "";
 		if(search != null) {	
 			String tcw = search.getTcw();
-			switch (tcw != null ? tcw : "all") {
+			switch (tcw != null ? tcw : "none") {
 				case "title":
 					where = "WHERE b_title like ? \n";
 					break;
@@ -48,9 +48,13 @@ public class BoardDAO {
 				case "writer":
 					where = "WHERE b_writer like ? \n";
 					break;
-					// "all"인 경우 where 구문을 생성하지 않는다.
-			}
-		}	
+				case "all":
+					where = "WHERE b_title like ? or b_content like ? or b_writer like ?";
+					break;
+			} 
+		} else {
+			where = "";
+		}
 		
 		try {
 			conn = DBConnection.getConnection();
@@ -67,10 +71,39 @@ public class BoardDAO {
 			
 			
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, pageNum);
-			pstmt.setString(2, "%"+search.getSearchbox()+"%");		//추가
-			pstmt.setInt(3, pageNum);
-			pstmt.setInt(4, Pagination.perPage);
+//			pstmt.setInt(1, pageNum);
+//			pstmt.setString(2, "%"+search.getSearchbox()+"%");		//추가
+//			pstmt.setInt(3, pageNum);
+//			pstmt.setInt(4, Pagination.perPage);
+				String channel = search.getTcw();
+				switch (channel != null ? channel : "none") {
+					case "title" :
+						pstmt.setInt(1, pageNum);
+						pstmt.setString(2, "%"+search.getSearchbox()+"%");		//추가
+						pstmt.setInt(3, pageNum);
+						pstmt.setInt(4, Pagination.perPage);
+						break;
+					case "content" :
+						pstmt.setInt(1, pageNum);
+						pstmt.setString(2, "%"+search.getSearchbox()+"%");		//추가
+						pstmt.setInt(3, pageNum);
+						pstmt.setInt(4, Pagination.perPage);
+						break;
+					case "writer" :
+						pstmt.setInt(1, pageNum);
+						pstmt.setString(2, "%"+search.getSearchbox()+"%");		//추가
+						pstmt.setInt(3, pageNum);
+						pstmt.setInt(4, Pagination.perPage);
+						break;
+					case "none":
+						pstmt.setInt(1, pageNum);
+						pstmt.setInt(2, pageNum);
+						pstmt.setInt(3, Pagination.perPage);
+						break;
+					
+				} 
+			
+			
 			rs = pstmt.executeQuery();
 			list = new ArrayList<Board>();
 			
