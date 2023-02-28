@@ -63,7 +63,7 @@
 			<tr>
 				<td><a href="/lcompany/board-detail.do?b_idx=${board.b_idx}">${board.rownum}</a></td>
 				<c:choose>
-					<c:when test="${board.b_depth > 0  }">
+					<c:when test="${board.b_depth > 0  }">										<%-- 답글의 답글 부분 ㄴ --%>
 						<td style="text-align: left;"> 
 						
 						<c:forEach var="i" begin="1" end="${board.b_depth}" step="1">
@@ -102,18 +102,25 @@
 				
 			</c:choose>
 			<c:forEach var ="i" begin="${pagination.startPage}" end="${pagination.endPage}" step="1">
-			
 				<c:choose>
 					<c:when test="${ pagination.page == i }">		<%-- 현재페이지가 i와 같다면 회색으로 나오게 한다. --%>
-					
 						<li style="background-color:#ededed;">
 							<span>${i}</span>
 						</li>
 					</c:when>
 					<c:when test="${ pagination.page != i }">		<%-- 현재페이지가 i와 다르다면 링크를 걸게 한다. --%>
-						<li>
-							<a href="board-list.do?page=${i}">${i}</a>
-						</li>
+						<c:choose>
+							<c:when test = "${ pagination.search.tcw == none }">
+								<li>
+									<a href="board-list.do?page=${i}">${i}</a>
+								</li>
+							</c:when>
+							<c:when test = "${ pagination.search.tcw == title || content || writer }">
+								<li>
+									<a href="board-list.do?page=${i}&tcw=${pagination.search.tcw}&searchbox=${pagination.search.searchbox}">${i}</a>
+								</li>
+							</c:when>
+						</c:choose>
 					</c:when>
 				</c:choose>
 			</c:forEach>

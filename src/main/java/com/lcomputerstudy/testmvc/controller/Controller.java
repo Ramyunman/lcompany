@@ -173,17 +173,23 @@ public class Controller extends HttpServlet {
 					page = Integer.parseInt(reqPage2);
 				
 				boardService = BoardService.getInstance(); 
-				count = boardService.getBoardsCount();
+				count = boardService.getBoardsCount();			//여기서 처리한다. 다 불러온다.
 				
-				search = new Search();
-				search.setTcw(request.getParameter("tcw"));
-				search.setSearchbox(request.getParameter("searchbox"));
-				
-				pagination = new Pagination();
-				pagination.setPage(page);
-				pagination.setUserCount(count);
-				pagination.init();
+				pagination = new Pagination();		
+				pagination.init();					//init() 메소드를 실행
+				pagination.setPage(page);			//페이지가 나옴
+				pagination.setUserCount(count);		//총데이터 개수 나옴
 				pagination.setSearch(search);		//추가
+				
+				search = new Search();	
+				search.setTcw(request.getParameter("tcw"));
+				search.setSearchbox(request.getParameter("searchbox"));		//search와 pagination자리 바꾸기
+
+//				String choice = search.getTcw();
+//				switch (choice != null ? choice : "none") {
+//					case "title":
+//						break;
+//				}
 				
 				ArrayList<Board> list2 = boardService.getBoards(pagination);
 			//	boardService.getBoards(pagination);

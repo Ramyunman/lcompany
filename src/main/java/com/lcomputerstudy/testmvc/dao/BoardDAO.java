@@ -258,7 +258,7 @@ public class BoardDAO {
 		return resultBoard;
 	}
 	
-	public int getBoardsCount() {
+	public int getBoardsCount() {		//회원수를 세알려준다.
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
