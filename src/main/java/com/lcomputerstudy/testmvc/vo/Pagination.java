@@ -1,5 +1,7 @@
 package com.lcomputerstudy.testmvc.vo;
 
+import com.lcomputerstudy.testmvc.service.BoardService;
+
 public class Pagination {
 	int userCount;			// 데이터 총 개수
 	int page;				// 현재 페이지 번호
@@ -14,7 +16,7 @@ public class Pagination {
 	Search search;			//추가
 	
 	public Pagination() {
-		
+		this.page = 1;
 	}
 	public void init() {	// Pagination 객체를 초기화한다.
 		pageNum = (page-1)*perPage;		//userCount - pageNum이 나오는 숫자에서부터 rownum이 시작돼 user 인덱스를 불러온다.
@@ -87,4 +89,10 @@ public class Pagination {
 		this.search = search;
 	}
 	
+/*	public void update() {	// 추가
+		BoardService boardService = BoardService.getInstance();
+		userCount = boardService.getBoardsCount(search);	// 검색 조건에 맞는 데이터 개수를 계산
+		init();	// 필드 값들을 업데이트
+	}
+*/	
 }

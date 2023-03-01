@@ -40,8 +40,8 @@ public class BoardService {
 	public void updateBoard(Board board) {
 		dao.updateBoard(board);
 	}
-	public int getBoardsCount() {
-		return dao.getBoardsCount();
+	public int getBoardsCount(Search search) {
+		return dao.getBoardsCount(search);
 	}
 	public void replyInsert(Board board) {		//답글
 		dao.replyInsert(board);

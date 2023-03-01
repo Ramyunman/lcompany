@@ -27,7 +27,7 @@ public class BoardDAO {
 		return dao;
 	}
 	
-	public ArrayList<Board> getBoards(Pagination pagination) {
+	public ArrayList<Board> getBoards(Pagination pagination) {		// board-list
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -258,7 +258,7 @@ public class BoardDAO {
 		return resultBoard;
 	}
 	
-	public int getBoardsCount() {		//회원수를 세알려준다.
+	public int getBoardsCount(Search search) {		// 게시물 수를 알려준다.
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -269,6 +269,31 @@ public class BoardDAO {
 			String query = "SELECT COUNT(*) count FROM board ";
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
+			
+			if(search != null) {
+				String tcw = search.getTcw();
+								
+				switch ((tcw != null) ? tcw : "none" ) {
+					case "title" :
+						query = "SELECT COUNT(*) count FROM board WHERE b_title LIKE ? ";
+						pstmt = conn.prepareStatement(query);
+						pstmt.setString(1, "%"+search.getSearchbox()+"%");
+						rs = pstmt.executeQuery();
+						break;
+					case "content" :
+						query = "SELECT COUNT(*) count FROM board WHERE b_content LIKE ? ";
+						pstmt = conn.prepareStatement(query);
+						pstmt.setString(1, "%"+search.getSearchbox()+"%");
+						rs = pstmt.executeQuery();
+						break;
+					case "writer" :
+						query = "SELECT COUNT(*) count FROM board WHERE b_writer LIKE ? ";
+						pstmt = conn.prepareStatement(query);
+						pstmt.setString(1, "%"+search.getSearchbox()+"%");
+						rs = pstmt.executeQuery();
+						break;	
+					} 		
+			} 			
 			
 			while(rs.next()) {
 				count = rs.getInt("count");

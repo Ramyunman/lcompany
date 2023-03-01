@@ -49,7 +49,6 @@ public class Controller extends HttpServlet {
 		Board board = null;			//board 추가
 		Comment comment = null;		//comment(댓글)추가
 		ArrayList<Comment> commentList = null;
-		Search search = null;		//search 추가
 		
 		int page = 1;
 		int count = 0;
@@ -173,26 +172,20 @@ public class Controller extends HttpServlet {
 					page = Integer.parseInt(reqPage2);
 				
 				boardService = BoardService.getInstance(); 
-				count = boardService.getBoardsCount();			//여기서 처리한다. 다 불러온다.
+							
+				Search search = new Search();	
+				search.setTcw(request.getParameter("tcw"));
+				search.setSearchbox(request.getParameter("searchbox"));
+				count = boardService.getBoardsCount(search);
 				
 				pagination = new Pagination();		
 				pagination.init();					//init() 메소드를 실행
 				pagination.setPage(page);			//페이지가 나옴
 				pagination.setUserCount(count);		//총데이터 개수 나옴
-				pagination.setSearch(search);		//추가
-				
-				search = new Search();	
-				search.setTcw(request.getParameter("tcw"));
-				search.setSearchbox(request.getParameter("searchbox"));		//search와 pagination자리 바꾸기
-
-//				String choice = search.getTcw();
-//				switch (choice != null ? choice : "none") {
-//					case "title":
-//						break;
-//				}
-				
+				pagination.setSearch(search);
+									
 				ArrayList<Board> list2 = boardService.getBoards(pagination);
-			//	boardService.getBoards(pagination);
+				boardService.getBoards(pagination);
 				
 				request.setAttribute("list", list2);
 				request.setAttribute("pagination", pagination);
