@@ -57,7 +57,7 @@
 		</tr>
 		<c:forEach items="${list}" var="user" varStatus="status">
 			<tr>
-				<td><a href="/lcomp1/user-detail.do?u_idx=${user.u_idx}">${user.rownum}</a></td>
+				<td><a href="/lcompany/user-detail.do?u_idx=${user.u_idx}">${user.rownum}</a></td>
 				<td>${user.u_id}</td>
 				<td>${user.u_name}</td>
 				<td>

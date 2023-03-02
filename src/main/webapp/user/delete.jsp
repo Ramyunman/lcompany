@@ -8,6 +8,6 @@
 </head>
 <body>
 <h1>회원을 삭제했습니다.</h1>
-<a href="/lcomp1/user-list.do">돌아가기</a>
+<a href="/lcompany/user-list.do">돌아가기</a>
 </body>
 </html>
