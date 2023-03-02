@@ -49,8 +49,6 @@ public class BoardDAO {
 					where = "WHERE b_writer like ? \n";
 					break;
 			} 
-		} else {
-			where = "";
 		}
 		
 		try {
@@ -267,33 +265,36 @@ public class BoardDAO {
 		try {
 			conn = DBConnection.getConnection();
 			String query = "SELECT COUNT(*) count FROM board ";
-			pstmt = conn.prepareStatement(query);
-			rs = pstmt.executeQuery();
+			pstmt = null;
 			
 			if(search != null) {
 				String tcw = search.getTcw();
 								
 				switch ((tcw != null) ? tcw : "none" ) {
 					case "title" :
-						query = "SELECT COUNT(*) count FROM board WHERE b_title LIKE ? ";
+						query += "WHERE b_title LIKE ? ";
 						pstmt = conn.prepareStatement(query);
 						pstmt.setString(1, "%"+search.getSearchbox()+"%");
-						rs = pstmt.executeQuery();
+						
 						break;
 					case "content" :
-						query = "SELECT COUNT(*) count FROM board WHERE b_content LIKE ? ";
+						query += "WHERE b_content LIKE ? ";
 						pstmt = conn.prepareStatement(query);
 						pstmt.setString(1, "%"+search.getSearchbox()+"%");
-						rs = pstmt.executeQuery();
+
 						break;
 					case "writer" :
-						query = "SELECT COUNT(*) count FROM board WHERE b_writer LIKE ? ";
+						query += "WHERE b_writer LIKE ? ";
 						pstmt = conn.prepareStatement(query);
 						pstmt.setString(1, "%"+search.getSearchbox()+"%");
-						rs = pstmt.executeQuery();
 						break;	
-					} 		
+					default:
+						query = "SELECT COUNT(*) count FROM board ";
+						pstmt = conn.prepareStatement(query);
+						break;											
+				} 		
 			} 			
+			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
 				count = rs.getInt("count");

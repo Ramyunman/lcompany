@@ -41,7 +41,6 @@ public class Controller extends HttpServlet {
 		HttpSession session = null;		//login
 		command = checkSession(request, response, command);		//권한
 		
-		
 		UserService userService = null; 
 		BoardService boardService = null;		//board 추가
 		CommentService commentService = null;
@@ -66,7 +65,7 @@ public class Controller extends HttpServlet {
 				
 				pagination = new Pagination();
 				pagination.setPage(page);
-				pagination.setUserCount(count);
+				pagination.setAmount(count);
 				pagination.init();
 				
 				ArrayList<User> list = userService.getUsers(pagination);
@@ -179,10 +178,10 @@ public class Controller extends HttpServlet {
 				count = boardService.getBoardsCount(search);
 				
 				pagination = new Pagination();		
-				pagination.init();					//init() 메소드를 실행
-				pagination.setPage(page);			//페이지가 나옴
-				pagination.setUserCount(count);		//총데이터 개수 나옴
 				pagination.setSearch(search);
+				pagination.setPage(page);			//페이지가 나옴
+				pagination.setAmount(count);		//총데이터 개수 나옴
+				pagination.init();					//init() 메소드를 실행
 									
 				ArrayList<Board> list2 = boardService.getBoards(pagination);
 				boardService.getBoards(pagination);
@@ -349,8 +348,8 @@ public class Controller extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String[] authList = {
-				"/user-list.do"
-				, "/user-insert.do"
+				//"/user-list.do",
+				 "/user-insert.do"
 				, "/user-insert-process.do"
 				, "/user-detail.do"
 				, "/user-edit.do"

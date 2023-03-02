@@ -53,7 +53,7 @@
 <h1>게시글 목록</h1>
 	<table>
 		<tr>
-			<td colspan="3">전체 게시글 수: ${pagination.userCount }</td>
+			<td colspan="3">전체 게시글 수: ${pagination.amount }</td>
 		<tr>
 			<th>No</th>
 			<th>제목</th>
@@ -110,14 +110,15 @@
 					</c:when>
 					<c:when test="${ pagination.page != i }">		<%-- 현재페이지가 i와 다르다면 링크를 걸게 한다. --%>
 						<c:choose>
-							<c:when test = "${ pagination.search.tcw == none }">
+							<c:when test = "${ pagination.search.tcw == null }">
 								<li>
 									<a href="board-list.do?page=${i}">${i}</a>
 								</li>
 							</c:when>
-							<c:when test = "${ pagination.search.tcw == title || content || writer }">
+							<c:when test = "${ pagination.search.tcw == 'title' || pagination.search.tcw == 'content' 
+							|| pagination.search.tcw == 'writer' }">
 								<li>
-									<a href="board-list.do?page=${i}&tcw=${pagination.search.tcw}&searchbox=${pagination.search.searchbox}">${i}</a>
+									<a href="board-list.do?tcw=${pagination.search.tcw}&searchbox=${pagination.search.searchbox}&page=${i}">${i}</a>
 								</li>
 							</c:when>
 						</c:choose>

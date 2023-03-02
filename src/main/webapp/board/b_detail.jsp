@@ -30,6 +30,7 @@
 		padding:10px;
 		display:inline-block;
 	}
+	
 </style>
 <body>
 	<h1>상세페이지</h1>
@@ -67,18 +68,6 @@
 	</table>
 	<a href="/lcompany/board-reply-insert.do?b_group=${board.b_group}&b_order=${board.b_order}&b_depth=${board.b_depth}">답글 등록</a>
 	
-<%--		
-	<h4> >> 댓글 등록 </h4>
-	<form action="comment-original-insert-process.do" name="comment" method="post">
-		<input type = "hidden" name="b_idx" value="${board.b_idx}">
- 		<input type = "hidden" name="c_group" value="${comment.c_group}">
-		<input type = "hidden" name="c_order" value="${comment.c_order}">
-		<input type = "hidden" name="c_depth" value="${comment.c_depth}">	
-		내용 : <input type="text" name="c_content">
-		
-		<input type="submit" value="등록하기">	
-	</form>
---%>	
 	<button type="button" class="o_btnComment"> 댓글 등록 </button>
 		
 		<div style="display: none;">
