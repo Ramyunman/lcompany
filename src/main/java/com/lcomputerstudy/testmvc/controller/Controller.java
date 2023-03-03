@@ -163,6 +163,17 @@ public class Controller extends HttpServlet {
 			case "/access-denied.do":
 				view = "user/access-denied";
 				break;
+			case "/user-adminOn.do":	//level만 1 -> 9 로 업데이트
+				int uIdx = Integer.parseInt(request.getParameter("u_idx"));
+				int uLevel = Integer.parseInt(request.getParameter("u_level"));
+				
+				
+				break;
+			case "/user-adminOff.do":	//level만 9 -> 1 로 업데이트
+				user = new User();
+				
+				user.setU_level(Integer.parseInt(request.getParameter("level")));
+				break;
 			////////////////////////////board/////////////////////////////////
 			case "/board-list.do":
 				
@@ -349,12 +360,12 @@ public class Controller extends HttpServlet {
 		
 		String[] authList = {
 				//"/user-list.do",
-				 "/user-insert.do"
-				, "/user-insert-process.do"
-				, "/user-detail.do"
-				, "/user-edit.do"
-				, "/user-edit-process.do"
-				, "/logout.do"
+				// "/user-insert.do"
+				//, "/user-insert-process.do"
+				//, "/user-detail.do"
+				//, "/user-edit.do"
+				//, "/user-edit-process.do"
+				//, "/logout.do"
 		};
 		
 		for (String item : authList) {

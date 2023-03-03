@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>회원목록2</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <style>
 	h1 {
@@ -59,10 +60,14 @@
 			<tr>
 				<td><a href="/lcompany/user-detail.do?u_idx=${user.u_idx}">${user.rownum}</a></td>
 				<td>${user.u_id}</td>
-				<td>${user.u_name}</td>
+				<td>${user.u_name}</td>				
 				<td>
-					<button type="button" class="adminOn">관리자On</button>
-					<button type="button" class="adminOff">관리자Off</button>				
+					<div>
+						<button type="button" class="adminOn">관리자On</button>
+					</div>
+					<div style="display:none;">
+						<button type="button" class="adminOff">관리자Off</button>	
+					</div>			
 				</td>
 			</tr>
 		</c:forEach>	
@@ -111,6 +116,53 @@
 			</c:choose>
 		</ul>
 	</div>
+
+<script>
+$(document).on('click','adminOn',function () {		//권한 On 버튼 click : u_level이 1 -> 9
+	let uIdx = $(this).closest('tr').find('a').attr('href').split('=')[1];	// 클릭한 버튼이 속한 회원의 u_idx 값을 가져옵니다.
+	let uLevel = 9;		// 업데이트할 u_level 값을 지정합니다.
+	
+	$.ajax({
+		method : 'POST',
+		url : "/lcompany/user-adminOn.do",
+		data : { 
+			u_idx: uIdx,
+			u_level:uLevel
+		},
+		success: function (data) {
+			$('.adminOn').hide();		
+			$('.adminOff').show();	
+			console.log('관리자가 되었습니다.');
+		},
+		error: function (xhr, status, error) {
+			console.log('관리자On 버튼에 error 발생!');	
+		}
+	});
+});
+
+$(document).on('click','adminOn',function () {		//권한 Off 버튼 click : u_level이 9 -> 1
+	let uIdx = $(this).closest('tr').find('a').attr('href').split('=')[1];	// 클릭한 버튼이 속한 회원의 u_idx 값을 가져옵니다.
+	let uLevel = 1;		// 업데이트할 u_level 값을 지정합니다.
+	
+	$.ajax({
+		method : 'POST',
+		url : "/lcompany/user-adminOff.do",
+		data : { 
+			u_idx: uIdx,
+			u_level:uLevel
+		},
+		success: function (data) {
+			$('.adminOff').hide();		
+			$('.adminOn').show();
+			console.log('일반회원이 되었습니다.');
+		},
+		error: function (xhr, status, error) {
+			console.log('관리자Off 버튼 error 발생!');	
+		}
+	});
+});
+</script>
+	
 </body>
 
 </html>

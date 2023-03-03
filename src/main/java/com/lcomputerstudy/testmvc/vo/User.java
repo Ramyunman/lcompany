@@ -7,9 +7,10 @@ public class User {
 	private String u_pw;
 	private String u_name;
 	private String u_tel;
-	private String[] u_telArr;		// 전화번호 배열
+	private String[] u_telArr;	// 전화번호 배열
 	private String u_age;
-	private int rownum;				//rownum 추가
+	private int rownum;			// rownum 추가
+	private int u_level;		// level 추가
 	
 	public int getU_idx() {
 		return u_idx;
@@ -58,6 +59,12 @@ public class User {
 	}
 	public void setRownum(int rownum) {
 		this.rownum = rownum;
+	}
+	public int getU_level() {
+		return u_level;
+	}
+	public void setU_level(int u_level) {
+		this.u_level = u_level;
 	}
 	
 	

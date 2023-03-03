@@ -20,7 +20,7 @@
 			   <input type="text" maxlength="4" size="4" name="tel2" value="${user.u_telArr[1] }"> -
 			   <input type="text" maxlength="4" size="4" name="tel3" value="${user.u_telArr[2] }">
 	</p>
-	<p> 나이 : <input type="text" name="age" value = ${user.u_age }></p>
+	<p> 나이 : <input type="text" name="age" value = ${user.u_age }></p> 
 	<p> <input type="submit" value="수정하기"></p>
 	<a href="/lcompany/user-list.do"> 목록으로 </a>
 </form>

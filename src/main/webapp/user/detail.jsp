@@ -38,21 +38,25 @@
 		<td>회원 번호</td>
 		<td>${user.u_idx }</td>
 	</tr>
-		<tr>
+	<tr>
 		<td>회원 ID</td>
 		<td>${user.u_id }</td>
 	</tr>
-		<tr>
+	<tr>
 		<td>회원 이름</td>
 		<td>${user.u_name }</td>
 	</tr>
-		<tr>
+	<tr>
 		<td>회원 전화번호</td>
 		<td>${user.u_tel }</td>
 	</tr>
-		<tr>
+	<tr>
 		<td>회원 나이</td>
 		<td>${user.u_age }</td>
+	</tr>
+	<tr>
+		<td>회원 레벨</td>
+		<td>${user.u_level }</td>		<%-- 나중에 지우기 --%>
 	</tr>
 	<tr style="height:50px;">
 			<td style="border:none;">

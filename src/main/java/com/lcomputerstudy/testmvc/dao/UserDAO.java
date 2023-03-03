@@ -57,8 +57,9 @@ public class UserDAO {
 				user.setU_id(rs.getString("u_id"));
 				user.setU_name(rs.getString("u_name"));
 				user.setU_tel(rs.getString("u_tel"));
-				user.setU_telArr(user.getU_tel().split("-"));		//전화번호 3개로 쪼개기
+				user.setU_telArr(user.getU_tel().split("-"));	//전화번호 3개로 쪼개기
 				user.setU_age(rs.getString("u_age"));
+				user.setU_level(rs.getInt("u_level"));	         // level추가
 				
 				list.add(user);
 			}
@@ -83,7 +84,7 @@ public class UserDAO {
 		
 		try {
 			conn = DBConnection.getConnection();
-			String sql = "insert into user(u_id, u_pw, u_name, u_tel, u_age) values(?,?,?,?,?)";
+			String sql = "insert into user(u_id, u_pw, u_name, u_tel, u_age, u_level) values(?,?,?,?,?,1)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, user.getU_id());
 			pstmt.setString(2, user.getU_pw());
@@ -126,7 +127,7 @@ public class UserDAO {
 				resultUser.setU_telArr(resultUser.getU_tel().split("-"));		// 배열이 필요한 이유는 u_tel에 저장되어 있는 것을 3군데로 나누기 위한 배열 즉 담은 공간 3개 바구니를 만든것과 같은 것이다.
 				resultUser.setU_pw(rs.getString("u_pw"));
 				resultUser.setU_age(rs.getString("u_age"));
-		   	  
+		   	  	resultUser.setU_level(rs.getInt("u_level"));		//나중에 지우기 level 보여주는거
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
