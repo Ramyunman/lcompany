@@ -263,5 +263,53 @@ public class UserDAO {
 		return user;
 	}	// end of loginUser
 	
+	public void adminOnUser(User user) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			String sql = "UPDATE user SET u_level = 9 where u_idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, user.getU_idx());
+			pstmt.executeUpdate();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}	
+		
+	}
+	
+	public void adminOffUser(User user) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			String sql = "UPDATE user SET u_level = 1 where u_idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, user.getU_idx());
+			pstmt.executeUpdate();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}	
+		
+	}
+	
+	
+	
 
 }

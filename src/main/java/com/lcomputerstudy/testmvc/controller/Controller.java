@@ -164,15 +164,20 @@ public class Controller extends HttpServlet {
 				view = "user/access-denied";
 				break;
 			case "/user-adminOn.do":	//level만 1 -> 9 로 업데이트
-				int uIdx = Integer.parseInt(request.getParameter("u_idx"));
-				int uLevel = Integer.parseInt(request.getParameter("u_level"));
-				
-				
+				user = new User();
+				user.setU_idx(Integer.parseInt(request.getParameter("u_idx")));
+				user.setU_level(Integer.parseInt(request.getParameter("u_level")));
+				userService = UserService.getInstance();
+				userService.adminOnUser(user);
+				view = "user/u_list";
 				break;
 			case "/user-adminOff.do":	//level만 9 -> 1 로 업데이트
 				user = new User();
-				
-				user.setU_level(Integer.parseInt(request.getParameter("level")));
+				user.setU_idx(Integer.parseInt(request.getParameter("u_idx")));
+				user.setU_level(Integer.parseInt(request.getParameter("u_level")));
+				userService = UserService.getInstance();
+				userService.adminOffUser(user);
+				view = "user/u_list";
 				break;
 			////////////////////////////board/////////////////////////////////
 			case "/board-list.do":

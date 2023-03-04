@@ -50,4 +50,12 @@ public class UserService {
 	public User loginUser(String id, String pw) {
 		return dao.loginUser(id,pw);
 	}
+	
+	public void adminOnUser(User user) {	// u_level 1 -> 9
+		dao.adminOnUser(user);
+	}
+	
+	public void adminOffUser(User user) {	// u_level 9 -> 1
+		dao.adminOffUser(user);
+	}
 }

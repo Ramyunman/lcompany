@@ -118,48 +118,40 @@
 	</div>
 
 <script>
-$(document).on('click','adminOn',function () {		//권한 On 버튼 click : u_level이 1 -> 9
+$(document).on('click','.adminOn',function () {		//권한 On 버튼 click : u_level이 1 -> 9
 	let uIdx = $(this).closest('tr').find('a').attr('href').split('=')[1];	// 클릭한 버튼이 속한 회원의 u_idx 값을 가져옵니다.
 	let uLevel = 9;		// 업데이트할 u_level 값을 지정합니다.
 	
 	$.ajax({
 		method : 'POST',
 		url : "/lcompany/user-adminOn.do",
-		data : { 
-			u_idx: uIdx,
-			u_level:uLevel
-		},
-		success: function (data) {
-			$('.adminOn').hide();		
-			$('.adminOff').show();	
-			console.log('관리자가 되었습니다.');
-		},
-		error: function (xhr, status, error) {
-			console.log('관리자On 버튼에 error 발생!');	
-		}
+		data : { u_idx:uIdx, u_level:uLevel }
+	})
+	.done(function( msg ) {
+		console.log(msg);
+		$('#userList').html(msg);
 	});
+	console.log('adminOn작동');
+	$(this).parent().next().css('display','');
+	$(this).parent().css('display','none')
 });
 
-$(document).on('click','adminOn',function () {		//권한 Off 버튼 click : u_level이 9 -> 1
+$(document).on('click','.adminOff',function () {		//권한 Off 버튼 click : u_level이 9 -> 1
 	let uIdx = $(this).closest('tr').find('a').attr('href').split('=')[1];	// 클릭한 버튼이 속한 회원의 u_idx 값을 가져옵니다.
 	let uLevel = 1;		// 업데이트할 u_level 값을 지정합니다.
 	
 	$.ajax({
 		method : 'POST',
 		url : "/lcompany/user-adminOff.do",
-		data : { 
-			u_idx: uIdx,
-			u_level:uLevel
-		},
-		success: function (data) {
-			$('.adminOff').hide();		
-			$('.adminOn').show();
-			console.log('일반회원이 되었습니다.');
-		},
-		error: function (xhr, status, error) {
-			console.log('관리자Off 버튼 error 발생!');	
-		}
+		data : { u_idx:uIdx, u_level:uLevel }
+	})
+	.done(function( msg ) {
+		console.log(msg);
+		$('#userList').html(msg);
 	});
+	console.log('adminOff작동');
+	$(this).parent().prev().css('display','');
+	$(this).parent().css('display','none')
 });
 </script>
 	
