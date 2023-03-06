@@ -48,6 +48,7 @@
 </style>
 <body>
 <h1>회원 목록</h1>
+${sessionScope.user}
 	<table>
 		<tr>
 			<td colspan="3">전체 회원 수: ${pagination.amount}</td>
@@ -62,12 +63,20 @@
 				<td>${user.u_id}</td>
 				<td>${user.u_name}</td>				
 				<td>
-					<div>
-						<button type="button" class="adminOn">관리자On</button>
-					</div>
-					<div style="display:none;">
-						<button type="button" class="adminOff">관리자Off</button>	
-					</div>			
+				<c:choose>
+					<c:when test="${user.u_level == 1}">
+  						<div class="adminButtons">
+    						<button type="button" class="adminOn">관리자On</button>
+    						<button type="button" class="adminOff" style="display:none;">관리자Off</button>
+  						</div>
+					</c:when>
+					<c:when test="${user.u_level == 9 }">
+  						<div class="adminButtons">
+   							<button type="button" class="adminOn" style="display:none;">관리자On</button>
+    						<button type="button" class="adminOff">관리자Off</button>
+  						</div>
+					</c:when>
+				</c:choose>			
 				</td>
 			</tr>
 		</c:forEach>	
@@ -132,8 +141,8 @@ $(document).on('click','.adminOn',function () {		//권한 On 버튼 click : u_le
 		$('#userList').html(msg);
 	});
 	console.log('adminOn작동');
-	$(this).parent().next().css('display','');
-	$(this).parent().css('display','none')
+	$(this).next().css('display','');
+	$(this).css('display','none')
 });
 
 $(document).on('click','.adminOff',function () {		//권한 Off 버튼 click : u_level이 9 -> 1
@@ -150,8 +159,8 @@ $(document).on('click','.adminOff',function () {		//권한 Off 버튼 click : u_
 		$('#userList').html(msg);
 	});
 	console.log('adminOff작동');
-	$(this).parent().prev().css('display','');
-	$(this).parent().css('display','none')
+	$(this).prev().css('display','');
+	$(this).css('display','none')
 });
 </script>
 	

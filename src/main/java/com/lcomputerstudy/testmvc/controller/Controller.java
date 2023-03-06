@@ -364,13 +364,13 @@ public class Controller extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String[] authList = {
-				//"/user-list.do",
+				"/user-list.do",
 				// "/user-insert.do"
 				//, "/user-insert-process.do"
 				//, "/user-detail.do"
 				//, "/user-edit.do"
 				//, "/user-edit-process.do"
-				//, "/logout.do"
+				"/logout.do"
 		};
 		
 		for (String item : authList) {
