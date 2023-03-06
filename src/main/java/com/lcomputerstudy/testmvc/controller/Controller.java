@@ -137,18 +137,19 @@ public class Controller extends HttpServlet {
 			case "/user-login-process.do":		//login
 				id = request.getParameter("login_id");
 				pw = request.getParameter("login_password");
-				
+								
 				userService = UserService.getInstance();
 				user = userService.loginUser(id,pw);
 				
 				if(user != null) {
 					session = request.getSession();
+					session.setAttribute("user", user);
 //					session.setAttribute("u_idx", user.getU_idx());
 //					session.setAttribute("u_id", user.getU_id());
 //					session.setAttribute("u_pw", user.getU_pw());
 //					session.setAttribute("u_name", user.getU_name());
-					session.setAttribute("user", user);
-					
+//					session.setAttribute("u_tel", user.getU_tel());
+//					session.setAttribute("u_level", user.getU_level());	// u_level 값을 세션에 저장
 					view = "user/login-result";
 				} else {
 					view = "user/login-fail";

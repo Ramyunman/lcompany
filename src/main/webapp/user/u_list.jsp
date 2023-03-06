@@ -15,22 +15,24 @@
 				<td><a href="/lcompany/user-detail.do?u_idx=${user.u_idx}">${user.rownum}</a></td>
 				<td>${user.u_id}</td>
 				<td>${user.u_name}</td>				
-				<td>
-				<c:choose>
-					<c:when test="${user.u_level == 1}">
-  						<div class="adminButtons">
-    						<button type="button" class="adminOn">관리자On</button>
-    						<button type="button" class="adminOff" style="display:none;">관리자Off</button>
-  						</div>
-					</c:when>
-					<c:when test="${user.u_level == 9 }">
-  						<div class="adminButtons">
-   							<button type="button" class="adminOn" style="display:none;">관리자On</button>
-    						<button type="button" class="adminOff">관리자Off</button>
-  						</div>
-					</c:when>
-				</c:choose>			
-				</td>
+				<c:if test="${sessionScope.user.u_level == 9 }">
+					<td>
+					<c:choose>
+						<c:when test="${user.u_level == 1}">
+  							<div class="adminButtons">
+    							<button type="button" class="adminOn">관리자On</button>
+    							<button type="button" class="adminOff" style="display:none;">관리자Off</button>
+  							</div>
+						</c:when>
+						<c:when test="${user.u_level == 9 }">
+  							<div class="adminButtons">
+   								<button type="button" class="adminOn" style="display:none;">관리자On</button>
+    							<button type="button" class="adminOff">관리자Off</button>
+  							</div>
+						</c:when>
+					</c:choose>	
+					</td>
+				</c:if>	
 			</tr>
 		</c:forEach>	
 	</table>
