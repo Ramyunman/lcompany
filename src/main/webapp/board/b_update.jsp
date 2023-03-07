@@ -14,11 +14,8 @@
 <form action="board-update-process.do" name="board" method="post">
 	<input type = "hidden" name = "b_idx" value = "${board.b_idx }">
 	<p> 제목 : <input type="text" name="title" value = ${board.b_title }></p>
-	<p> 내용 : <input type="text" name="content" value = ${board.b_content }></p>
-	<p> 조회수 : <input type="text" name="views" value = ${board.b_views }></p>
-	<p> 작성자 : <input type="text" name="writer" value = ${board.b_writer }></p>
-	<p> 작성일자 : <input type="text" name="date" value = ${board.b_date }></p>
-	
+	<p> 내용 : <textarea name="content" rows="10" cols="50">${board.b_content}</textarea></p>
+
 	<p> <input type="submit" value="수정하기"></p>
 	<a href="/lcompany/board-list.do"> 목록으로 </a>
 </form>

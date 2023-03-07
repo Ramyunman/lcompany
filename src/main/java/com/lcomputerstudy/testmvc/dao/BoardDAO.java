@@ -148,7 +148,7 @@ public class BoardDAO {
 			pstmt.executeUpdate();
 		
 		} catch (Exception ex) {
-			System.out.println("SQLException : " + ex.getMessage());
+			ex.printStackTrace();
 		} finally {
 			try {
 				if(pstmt != null) pstmt.close();
@@ -207,13 +207,11 @@ public class BoardDAO {
 		
 		try {
 			conn = DBConnection.getConnection();
-			String sql = "UPDATE board SET b_title = ?, b_content = ?, b_views = ?, b_date = ? where b_idx = ?";
+			String sql = "UPDATE board SET b_title = ?, b_content = ?, b_date = now() where b_idx = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, board.getB_title());
 			pstmt.setString(2, board.getB_content());
-			pstmt.setString(3, board.getB_views());
-			pstmt.setString(4, board.getB_date());
-			pstmt.setString(5, String.valueOf(board.getB_idx()));
+			pstmt.setInt(3, board.getB_idx());
 			pstmt.executeUpdate();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -347,6 +345,36 @@ public class BoardDAO {
 				e.printStackTrace();
 			}
 		}
+		
+	}
+	
+	public String getWriterName(int u_idx) {	// 작성자 불러오는 메소드
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String writerName = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			String query = "SELECT u_name FROM user WHERE u_idx = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, u_idx);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				writerName = rs.getString("u_name");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return writerName;
 		
 	}
 	

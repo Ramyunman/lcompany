@@ -15,7 +15,6 @@
 	<form action="board-reply-insert-process.do" name="board" method="post">
 	<p> 제목 : <input type="text" name="title"></p>
 	<p> 내용 : <input type="text" name="content"></p>
-	<p> 작성자 : <input type="text" name="writer"></p>
 	<p> <input type = "hidden" name = "b_group" value = "${board.b_group }"> </p>
 	<p> <input type = "hidden" name = "b_order" value = "${board.b_order }"> </p>
 	<p> <input type = "hidden" name = "b_depth" value = "${board.b_depth }"> </p>

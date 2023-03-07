@@ -46,6 +46,8 @@ public class BoardService {
 	public void replyInsert(Board board) {		//답글
 		dao.replyInsert(board);
 	}
-	
+	public String getWriterName(int u_idx) {	//작성자 불러오는 메소드
+		return dao.getWriterName(u_idx);
+	}
 
 }
