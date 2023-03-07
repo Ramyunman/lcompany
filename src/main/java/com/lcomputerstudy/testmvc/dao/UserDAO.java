@@ -249,6 +249,7 @@ public class UserDAO {
 				user.setU_pw(rs.getString("u_pw"));
 				user.setU_id(rs.getString("u_id"));
 				user.setU_name(rs.getString("u_name"));
+				user.setU_level(rs.getInt("u_level"));		//level 추가
 			}
 		} catch (Exception ex) {
 			System.out.println("SQLException : " + ex.getMessage());

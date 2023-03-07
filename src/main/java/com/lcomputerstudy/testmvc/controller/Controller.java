@@ -149,7 +149,7 @@ public class Controller extends HttpServlet {
 //					session.setAttribute("u_pw", user.getU_pw());
 //					session.setAttribute("u_name", user.getU_name());
 //					session.setAttribute("u_tel", user.getU_tel());
-//					session.setAttribute("u_level", user.getU_level());	// u_level 값을 세션에 저장
+					session.setAttribute("u_level", user.getU_level());	// u_level 값을 세션에 저장
 					view = "user/login-result";
 				} else {
 					view = "user/login-fail";
@@ -365,13 +365,13 @@ public class Controller extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String[] authList = {
-				"/user-list.do",
-				// "/user-insert.do"
+				"/user-list.do"
+				//, "/user-insert.do"
 				//, "/user-insert-process.do"
 				//, "/user-detail.do"
 				//, "/user-edit.do"
 				//, "/user-edit-process.do"
-				"/logout.do"
+				,"/logout.do"
 		};
 		
 		for (String item : authList) {

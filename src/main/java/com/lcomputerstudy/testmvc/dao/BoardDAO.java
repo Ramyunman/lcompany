@@ -45,9 +45,9 @@ public class BoardDAO {
 				case "content":
 					where = "WHERE b_content like ? \n";
 					break;
-				case "writer":
-					where = "WHERE b_writer like ? \n";
-					break;
+//				case "writer":
+//					where = "WHERE b_writer like ? \n";
+//					break;
 			} 
 		}
 		
@@ -80,12 +80,12 @@ public class BoardDAO {
 					pstmt.setInt(3, pageNum);
 					pstmt.setInt(4, Pagination.perPage);
 					break;
-				case "writer" :
-					pstmt.setInt(1, pageNum);
-					pstmt.setString(2, "%"+search.getSearchbox()+"%");		//추가
-					pstmt.setInt(3, pageNum);
-					pstmt.setInt(4, Pagination.perPage);
-					break;
+//				case "writer" :
+//					pstmt.setInt(1, pageNum);
+//					pstmt.setString(2, "%"+search.getSearchbox()+"%");		//추가
+//					pstmt.setInt(3, pageNum);
+//					pstmt.setInt(4, Pagination.perPage);
+//					break;
 				case "none":
 					pstmt.setInt(1, pageNum);
 					pstmt.setInt(2, pageNum);
@@ -106,8 +106,8 @@ public class BoardDAO {
 				board.setB_title(rs.getString("b_title"));
 				board.setB_content(rs.getString("b_content"));
 				board.setB_views(rs.getString("b_views"));
-				board.setB_writer(rs.getString("b_writer"));
 				board.setB_date(rs.getString("b_date"));
+				board.setU_idx(rs.getInt("u_idx"));
 				board.setB_group(rs.getInt("b_group"));
 				board.setB_order(rs.getInt("b_order"));
 				board.setB_depth(rs.getInt("b_depth"));
@@ -136,11 +136,11 @@ public class BoardDAO {
 		
 		try {
 			conn = DBConnection.getConnection();
-			String sql = "insert into board(b_title, b_content, b_views, b_writer, b_date, b_group, b_order, b_depth) values (?,?,0,?,now(),0,1,0)";
+			String sql = "insert into board(b_title, b_content, b_views, b_date, u_idx, b_group, b_order, b_depth) values (?,?,0,now(),?,0,1,0)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, board.getB_title());
 			pstmt.setString(2, board.getB_content());
-			pstmt.setString(3, board.getB_writer());
+			pstmt.setInt(3, board.getU_idx());
 			pstmt.executeUpdate();
 			pstmt.close();
 			
@@ -180,8 +180,8 @@ public class BoardDAO {
 				resultBoard.setB_title(rs.getString("b_title"));
 				resultBoard.setB_content(rs.getString("b_content"));
 				resultBoard.setB_views(rs.getString("b_views"));
-				resultBoard.setB_writer(rs.getString("b_writer"));
 				resultBoard.setB_date(rs.getString("b_date"));	
+				resultBoard.setU_idx(rs.getInt("u_idx"));	// u_idx 추가
 				resultBoard.setB_group(Integer.parseInt(rs.getString("b_group")));		
 				resultBoard.setB_order(Integer.parseInt(rs.getString("b_order")));		
 				resultBoard.setB_depth(Integer.parseInt(rs.getString("b_depth")));		
@@ -207,14 +207,13 @@ public class BoardDAO {
 		
 		try {
 			conn = DBConnection.getConnection();
-			String sql = "UPDATE board SET b_title = ?, b_content = ?, b_views = ?, b_writer = ?, b_date = ? where b_idx = ?";
+			String sql = "UPDATE board SET b_title = ?, b_content = ?, b_views = ?, b_date = ? where b_idx = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, board.getB_title());
 			pstmt.setString(2, board.getB_content());
 			pstmt.setString(3, board.getB_views());
-			pstmt.setString(4, board.getB_writer());
-			pstmt.setString(5, board.getB_date());
-			pstmt.setString(6, String.valueOf(board.getB_idx()));
+			pstmt.setString(4, board.getB_date());
+			pstmt.setString(5, String.valueOf(board.getB_idx()));
 			pstmt.executeUpdate();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -283,11 +282,11 @@ public class BoardDAO {
 						pstmt.setString(1, "%"+search.getSearchbox()+"%");
 
 						break;
-					case "writer" :
-						query += "WHERE b_writer LIKE ? ";
-						pstmt = conn.prepareStatement(query);
-						pstmt.setString(1, "%"+search.getSearchbox()+"%");
-						break;	
+//					case "writer" :
+//						query += "WHERE b_writer LIKE ? ";
+//						pstmt = conn.prepareStatement(query);
+//						pstmt.setString(1, "%"+search.getSearchbox()+"%");
+//						break;	
 					default:
 						query = "SELECT COUNT(*) count FROM board ";
 						pstmt = conn.prepareStatement(query);
@@ -327,11 +326,11 @@ public class BoardDAO {
 			pstmt.executeUpdate();
 			pstmt.close();
 			
-			sql = "insert into board(b_title, b_content, b_views, b_writer, b_date, b_group, b_order, b_depth) values (?,?,0,?,now(),?,?,?)";	//원글에 계속 다는거(사선으로)		
+			sql = "insert into board(b_title, b_content, b_views, u_idx, b_date, b_group, b_order, b_depth) values (?,?,0,?,now(),?,?,?)";	//원글에 계속 다는거(사선으로)		
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, board.getB_title());
 			pstmt.setString(2, board.getB_content());
-			pstmt.setString(3, board.getB_writer());
+			pstmt.setInt(3, board.getU_idx());		//u_idx
 			pstmt.setInt(4, board.getB_group());
 			pstmt.setInt(5, board.getB_order() + 1);
 			pstmt.setInt(6, board.getB_depth() + 1);
