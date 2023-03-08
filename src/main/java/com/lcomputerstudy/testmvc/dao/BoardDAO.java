@@ -155,10 +155,6 @@ public class BoardDAO {
 		} finally {
 			try {
 				if(pstmt != null) pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			try {
 				if(conn != null) conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -329,7 +325,7 @@ public class BoardDAO {
 		
 	}
 	
-	public void replyInsert(Board board) {		// 답글 
+	public void replyInsert(Board board, HttpSession session) {		// 답글 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
@@ -346,7 +342,7 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, board.getB_title());
 			pstmt.setString(2, board.getB_content());
-			pstmt.setInt(3, board.getU_idx());		//u_idx
+			pstmt.setInt(3, (int)session.getAttribute("u_idx"));		//u_idx
 			pstmt.setInt(4, board.getB_group());
 			pstmt.setInt(5, board.getB_order() + 1);
 			pstmt.setInt(6, board.getB_depth() + 1);

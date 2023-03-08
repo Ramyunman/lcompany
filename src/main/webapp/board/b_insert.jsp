@@ -16,7 +16,6 @@ ${sessionScope.user}
 	<p> 제목 : <input type="text" name="title"></p>
 	<p> 내용 : </p> 
 	<textarea name="content" rows="10" cols="50"></textarea> 
-<%-- <input type = "hidden" name = "u_idx" value = "${board.user.u_idx }"> --%>
 		
 	<p> <input type="submit" value="등록하기"></p>
 </form>

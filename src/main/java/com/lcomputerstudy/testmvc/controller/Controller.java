@@ -283,6 +283,7 @@ public class Controller extends HttpServlet {
 				break;
 				
 			case "/board-reply-insert-process.do":		
+				session = request.getSession();	//세션 생성 코드
 				board = new Board();
 				board.setB_title(request.getParameter("title"));
 				board.setB_content(request.getParameter("content"));
@@ -292,7 +293,7 @@ public class Controller extends HttpServlet {
 				board.setB_depth(Integer.parseInt(request.getParameter("b_depth")));
 				
 				boardService = BoardService.getInstance();
-				boardService.replyInsert(board);
+				boardService.replyInsert(board,session);
 				view = "board/b_reply-insert-result";
 				break;
 				
