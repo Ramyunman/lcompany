@@ -135,20 +135,21 @@ public class Controller extends HttpServlet {
 				view = "user/login";
 				break;
 			case "/user-login-process.do":		//login
+				// 세션을 생성
+				session = request.getSession();
+				
+				// 로그인 파라미터 받아오기
 				id = request.getParameter("login_id");
 				pw = request.getParameter("login_password");
-								
+				
+				// 로그인 서비스를 이용하여 사용자 정보 조회
 				userService = UserService.getInstance();
 				user = userService.loginUser(id,pw);
 				
 				if(user != null) {
-					session = request.getSession();
+					// 세선에 사용자 정보 저장
 					session.setAttribute("user", user);
-//					session.setAttribute("u_idx", user.getU_idx());
-//					session.setAttribute("u_id", user.getU_id());
-//					session.setAttribute("u_pw", user.getU_pw());
-//					session.setAttribute("u_name", user.getU_name());
-//					session.setAttribute("u_tel", user.getU_tel());
+					session.setAttribute("u_idx", user.getU_idx());	// 세선에 u_idx 저장
 					session.setAttribute("u_level", user.getU_level());	// u_level 값을 세션에 저장
 					view = "user/login-result";
 				} else {
@@ -214,6 +215,7 @@ public class Controller extends HttpServlet {
 				break;
 				
 			case "/board-insert-process.do":		//실제 저장하는 코드 -> 있는 이유 : 이게 있어야 저장이 된다. 위에 하나만 있으면 시작하자마자 바로 저장이 되어서 입력할수가 없다.
+				session = request.getSession();	//세션 생성 코드
 				board = new Board();
 				board.setB_title(request.getParameter("title"));
 				board.setB_content(request.getParameter("content"));
@@ -221,7 +223,7 @@ public class Controller extends HttpServlet {
 				board.setB_writer(request.getParameter("writer"));
 								
 				boardService = BoardService.getInstance();
-				boardService.insertBoard(board);
+				boardService.insertBoard(board, session);
 				view = "board/b_insert-result";
 				break;
 				

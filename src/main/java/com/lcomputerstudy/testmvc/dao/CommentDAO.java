@@ -96,7 +96,7 @@ public class CommentDAO {
 			pstmt.executeUpdate();			
 				
 		} catch (Exception ex) {
-			System.out.println("SQLException : " + ex.getMessage());
+			ex.printStackTrace();
 		} finally {
 			try {
 				if (pstmt != null) pstmt.close();

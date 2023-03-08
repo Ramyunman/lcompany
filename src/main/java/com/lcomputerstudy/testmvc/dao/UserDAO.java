@@ -252,7 +252,7 @@ public class UserDAO {
 				user.setU_level(rs.getInt("u_level"));		//level 추가
 			}
 		} catch (Exception ex) {
-			System.out.println("SQLException : " + ex.getMessage());
+			ex.printStackTrace();
 		} finally {
 			try {
 				if (pstmt != null) pstmt.close();

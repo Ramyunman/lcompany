@@ -2,6 +2,7 @@ package com.lcomputerstudy.testmvc.service;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
 
 import com.lcomputerstudy.testmvc.dao.BoardDAO;
 import com.lcomputerstudy.testmvc.vo.Board;
@@ -28,8 +29,8 @@ public class BoardService {
 	public ArrayList<Board> getBoards(Pagination pagination) {
 		return dao.getBoards(pagination);
 	}
-	public void insertBoard(Board board) {
-		dao.insertBoard(board);
+	public void insertBoard(Board board, HttpSession session) {
+		dao.insertBoard(board, session);
 	}
 	public Board detailBoard(Board board) {
 		return dao.detailBoard(board);

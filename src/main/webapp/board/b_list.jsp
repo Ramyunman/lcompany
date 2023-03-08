@@ -51,6 +51,7 @@
 </style>
 <body>
 <h1>게시글 목록</h1>
+${sessionScope.user}
 	<table>
 		<tr>
 			<td colspan="3">전체 게시글 수: ${pagination.amount }</td>

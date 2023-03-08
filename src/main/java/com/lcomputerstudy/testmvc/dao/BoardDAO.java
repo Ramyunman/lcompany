@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import com.lcomputerstudy.testmvc.database.DBConnection;
 import com.lcomputerstudy.testmvc.vo.Board;
 import com.lcomputerstudy.testmvc.vo.Pagination;
@@ -131,7 +133,7 @@ public class BoardDAO {
 		return list;
 	}
 	
-	public void insertBoard(Board board) {		// 등록
+	public void insertBoard(Board board, HttpSession session) {		// 등록
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
@@ -141,7 +143,7 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, board.getB_title());
 			pstmt.setString(2, board.getB_content());
-			pstmt.setInt(3, board.getU_idx());
+			pstmt.setInt(3, (int)session.getAttribute("u_idx"));	
 			pstmt.executeUpdate();
 			pstmt.close();
 			
@@ -153,6 +155,10 @@ public class BoardDAO {
 		} finally {
 			try {
 				if(pstmt != null) pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
 				if(conn != null) conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -348,7 +354,7 @@ public class BoardDAO {
 			
 				
 		} catch (Exception ex) {
-			System.out.println("SQLException : " + ex.getMessage());
+			ex.printStackTrace();
 		} finally {
 			try {
 				if (pstmt != null) pstmt.close();
