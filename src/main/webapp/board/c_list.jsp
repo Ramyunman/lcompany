@@ -5,7 +5,8 @@
 		<tr>
 			<th>No</th>
 			<th>내용</th>
-			<th>작성일자</th>		
+			<th>작성일자</th>	
+			<th>작성자</th>	
 		</tr>
 			
 		<c:forEach items="${commentList}" var="comment" varStatus="status">
@@ -28,6 +29,7 @@
 				</c:choose>
 				
 				<td>${comment.c_date}</td>
+				<td>${comment.user.u_name}</td>
 				
 				<td>
 					<button type="button" class="btnComment">댓글</button>

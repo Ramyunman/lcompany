@@ -8,6 +8,7 @@ public class Comment {
 	private int c_order;
 	private int c_depth;
 	private int b_idx;
+	private User user;
 	
 	public int getC_idx() {
 		return c_idx;
@@ -50,6 +51,12 @@ public class Comment {
 	}
 	public void setB_idx(int b_idx) {
 		this.b_idx = b_idx;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	

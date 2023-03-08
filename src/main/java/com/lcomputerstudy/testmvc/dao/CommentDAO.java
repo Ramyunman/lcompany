@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import com.lcomputerstudy.testmvc.database.DBConnection;
 import com.lcomputerstudy.testmvc.vo.Comment;
+import com.lcomputerstudy.testmvc.vo.User;
 
 public class CommentDAO {
 	
@@ -32,7 +33,14 @@ public class CommentDAO {
 		
 		try {
 			conn = DBConnection.getConnection();
-			String query = "select * from comment where b_idx=? order by c_group desc, c_order asc, c_depth asc";
+			String query = new StringBuilder()
+					.append("SELECT        ta.*, \n")
+					.append("              tb.u_name \n")
+					.append("FROM          comment ta \n")
+					.append("LEFT JOIN     user tb ON ta.u_idx = tb.u_idx \n")
+					.append("WHERE 		   b_idx = ? \n")
+					.append("ORDER BY c_group DESC, c_order ASC, c_depth ASC")
+					.toString();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, b_idx);
 			rs = pstmt.executeQuery();
@@ -47,7 +55,13 @@ public class CommentDAO {
 				comment.setC_group(rs.getInt("c_group"));
 				comment.setC_order(rs.getInt("c_order"));
 				comment.setC_depth(rs.getInt("c_depth"));
+								
 				commentList.add(comment);
+				
+				User user = new User();
+				user.setU_name(rs.getString("u_name"));
+			//	user.setU_level(rs.getInt("u_level"));
+				comment.setUser(user);
 				
 			}
 		} catch (Exception e) {

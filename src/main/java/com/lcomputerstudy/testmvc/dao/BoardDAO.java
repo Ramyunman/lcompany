@@ -195,8 +195,9 @@ public class BoardDAO {
 				
 				User user = new User();
 				user.setU_name(rs.getString("u_name"));
+			//	user.setU_level(rs.getInt("u_level"));
 				resultBoard.setUser(user);
-				//resultBoard.setWriterName(rs.getString("u_name"));
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
