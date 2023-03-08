@@ -232,10 +232,7 @@ public class Controller extends HttpServlet {
 				boardService = BoardService.getInstance();
 				board = boardService.detailBoard(board);
 				request.setAttribute("board", board);
-				
-				String writerName = boardService.getWriterName(board.getU_idx());	//작성자 불러오는 메소드 추가
-				request.setAttribute("writerName", writerName);
-				
+								
 				commentService = CommentService.getInstance();		//comment
 				commentList = commentService.getComments(b_idx);
 				request.setAttribute("commentList", commentList);

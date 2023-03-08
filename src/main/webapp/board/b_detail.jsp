@@ -50,7 +50,7 @@
 	</tr>
 	<tr>
 		<td>작성자</td>
-		<td>${writerName}</td>
+		<td>${board.user.u_name}</td>
 	</tr>
 	<tr>
 		<td>작성일자</td>

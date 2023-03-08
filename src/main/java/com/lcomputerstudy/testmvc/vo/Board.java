@@ -10,9 +10,10 @@ public class Board {
 	private String[] b_dateArr;
 	private int rownum;
 	private int u_idx;		// u_idx 추가
-	private int b_group;	//답글
-	private int b_order;	//답글
-	private int b_depth;	//답글
+	private int b_group;	// 답글
+	private int b_order;	// 답글
+	private int b_depth;	// 답글
+	private User user;
 	
 	public int getB_idx() {
 		return b_idx;
@@ -85,6 +86,12 @@ public class Board {
 	}
 	public void setU_idx(int u_idx) {
 		this.u_idx = u_idx;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 		
 }

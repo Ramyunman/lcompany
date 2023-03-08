@@ -10,6 +10,7 @@ import com.lcomputerstudy.testmvc.database.DBConnection;
 import com.lcomputerstudy.testmvc.vo.Board;
 import com.lcomputerstudy.testmvc.vo.Pagination;
 import com.lcomputerstudy.testmvc.vo.Search;
+import com.lcomputerstudy.testmvc.vo.User;
 
 
 public class BoardDAO {
@@ -169,7 +170,13 @@ public class BoardDAO {
 		
 		try {
 			conn = DBConnection.getConnection();
-			String query = "select * from board where b_idx=?";
+			String query = new StringBuilder()
+					.append("SELECT        ta.*, \n")
+					.append("              tb.u_name \n")
+					.append("FROM          board ta \n")
+					.append("LEFT JOIN     user tb ON ta.u_idx = tb.u_idx \n")
+					.append("WHERE 		   b_idx = ?")
+					.toString();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, board.getB_idx());	//첫번째 물음표에 board.getB_idx()가 들어간다.
 			rs = pstmt.executeQuery();
@@ -186,6 +193,10 @@ public class BoardDAO {
 				resultBoard.setB_order(Integer.parseInt(rs.getString("b_order")));		
 				resultBoard.setB_depth(Integer.parseInt(rs.getString("b_depth")));		
 				
+				User user = new User();
+				user.setU_name(rs.getString("u_name"));
+				resultBoard.setUser(user);
+				//resultBoard.setWriterName(rs.getString("u_name"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -345,36 +356,6 @@ public class BoardDAO {
 				e.printStackTrace();
 			}
 		}
-		
-	}
-	
-	public String getWriterName(int u_idx) {	// 작성자 불러오는 메소드
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String writerName = null;
-		
-		try {
-			conn = DBConnection.getConnection();
-			String query = "SELECT u_name FROM user WHERE u_idx = ?";
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, u_idx);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				writerName = rs.getString("u_name");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (rs != null) rs.close();
-				if (pstmt != null) pstmt.close();
-				if (conn != null) conn.close();
-			} catch(SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return writerName;
 		
 	}
 	
