@@ -61,14 +61,40 @@ ${sessionScope.user}
 		<td>${board.user.u_level }</td>
 	</tr>
 	
-	<tr style="height:50px;">
+	<%-- <tr style="height:50px;">
 			<td style="border:none;">
 				<a href="/lcompany/board-update.do?b_idx=${board.b_idx}" style="width:70%;font-weight:700;background-color:#818181;color:#fff;">수정</a>
 			</td>
 			<td style="border:none;">
 				<a href="/lcompany/board-delete.do?b_idx=${board.b_idx}" style="width:70%;font-weight:700;background-color:red;color:#fff;">삭제</a>
 			</td>
-		</tr>
+		</tr>	--%>
+	<c:choose>
+		<c:when test="${sessionScope.u_level == 9 }">
+	 		<tr style="height:50px;">
+				<td style="border:none;">
+					<a href="/lcompany/board-delete.do?b_idx=${board.b_idx}" style="width:70%;font-weight:700;background-color:red;color:#fff;">삭제</a>
+				</td>
+			</tr>
+		</c:when>
+		<c:when test = "${sessionScope.u_level == 1 }">
+			<!-- u_level이 1일때는 수정/삭제 버튼을 모두 숨김 -->
+		</c:when>
+		<c:otherwise>
+			<!-- 작성자와 로그인한 사용자가 일치하면 수정/삭제 버튼을 모두 보이도록 구현 -->
+			<c:if test="${board.u_idx == sessionScope.u_idx }">
+				<tr style="height:50px;">
+					<td style="border:none;">
+						<a href="/lcompany/board-update.do?b_idx=${board.b_idx}" style="width:70%;font-weight:700;background-color:#818181;color:#fff;">수정</a>
+					</td>
+					<td style="border:none;">
+						<a href="/lcompany/board-delete.do?b_idx=${board.b_idx}" style="width:70%;font-weight:700;background-color:red;color:#fff;">삭제</a>
+					</td>
+				</tr>
+			</c:if>
+		</c:otherwise>
+	</c:choose>
+			
 	</table>
 	<a href="/lcompany/board-reply-insert.do?b_group=${board.b_group}&b_order=${board.b_order}&b_depth=${board.b_depth}">답글 등록</a>
 	
