@@ -48,20 +48,19 @@ public class BoardDAO {
 				case "content":
 					where = "WHERE b_content like ? \n";
 					break;
-//				case "writer":
-//					where = "WHERE b_writer like ? \n";
-//					break;
+				case "writer":
+					where = "WHERE u_name like ? \n";
+					break;
 			} 
 		}
 		
 		try {
-			conn = DBConnection.getConnection();
-			// String query = "select * from user limit ?,3";
-			String query = new StringBuilder()
-					.append("SELECT         @ROWNUM := @ROWNUM - 1 AS ROWNUM,\n")
-					.append("               t_board.*\n")
-					.append("FROM           board t_board\n")
-					.append("INNER JOIN      (SELECT @rownum := (SELECT COUNT(*)-?+1 FROM board t_board)) tc ON 1=1 \n")
+			conn = DBConnection.getConnection();				
+			String query = new StringBuilder()		//쿼리 수정
+					.append("SELECT         @ROWNUM := @ROWNUM - 1 AS ROWNUM, b.*, u.u_name \n")
+					.append("FROM           board b \n")
+					.append("INNER JOIN     user u ON b.u_idx = u.u_idx \n")
+					.append("INNER JOIN     (SELECT @rownum := (SELECT COUNT(*)-?+1 FROM board b)) tc ON 1=1 \n")
 					.append(where)
 					.append("ORDER BY b_group DESC, b_order ASC\n")
 					.append("LIMIT          ?, ? \n")
@@ -83,12 +82,12 @@ public class BoardDAO {
 					pstmt.setInt(3, pageNum);
 					pstmt.setInt(4, Pagination.perPage);
 					break;
-//				case "writer" :
-//					pstmt.setInt(1, pageNum);
-//					pstmt.setString(2, "%"+search.getSearchbox()+"%");		//추가
-//					pstmt.setInt(3, pageNum);
-//					pstmt.setInt(4, Pagination.perPage);
-//					break;
+				case "writer" :
+					pstmt.setInt(1, pageNum);
+					pstmt.setString(2, "%"+search.getSearchbox()+"%");		//추가
+					pstmt.setInt(3, pageNum);
+					pstmt.setInt(4, Pagination.perPage);
+					break;
 				case "none":
 					pstmt.setInt(1, pageNum);
 					pstmt.setInt(2, pageNum);
@@ -275,12 +274,15 @@ public class BoardDAO {
 		
 		try {
 			conn = DBConnection.getConnection();
-			String query = "SELECT COUNT(*) count FROM board ";
+			String query = new StringBuilder()
+					.append("SELECT        COUNT(*) count \n")
+					.append("FROM          board b \n")
+					.append("LEFT JOIN     user u ON b.u_idx = u.u_idx \n")
+					.toString();
 			pstmt = null;
 			
 			if(search != null) {
-				String tcw = search.getTcw();
-								
+				String tcw = search.getTcw();			
 				switch ((tcw != null) ? tcw : "none" ) {
 					case "title" :
 						query += "WHERE b_title LIKE ? ";
@@ -294,11 +296,11 @@ public class BoardDAO {
 						pstmt.setString(1, "%"+search.getSearchbox()+"%");
 
 						break;
-//					case "writer" :
-//						query += "WHERE b_writer LIKE ? ";
-//						pstmt = conn.prepareStatement(query);
-//						pstmt.setString(1, "%"+search.getSearchbox()+"%");
-//						break;	
+					case "writer" :
+						query += "WHERE u_name LIKE ? ";
+						pstmt = conn.prepareStatement(query);
+						pstmt.setString(1, "%"+search.getSearchbox()+"%");
+						break;	
 					default:
 						query = "SELECT COUNT(*) count FROM board ";
 						pstmt = conn.prepareStatement(query);

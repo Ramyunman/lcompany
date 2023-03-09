@@ -37,7 +37,7 @@ public class CommentDAO {
 			conn = DBConnection.getConnection();
 			String query = new StringBuilder()
 					.append("SELECT        ta.*, \n")
-					.append("              tb.u_name \n")
+					.append("              tb.u_name, u_level \n")
 					.append("FROM          comment ta \n")
 					.append("LEFT JOIN     user tb ON ta.u_idx = tb.u_idx \n")
 					.append("WHERE 		   b_idx = ? \n")
@@ -62,7 +62,7 @@ public class CommentDAO {
 				
 				User user = new User();
 				user.setU_name(rs.getString("u_name"));
-			//	user.setU_level(rs.getInt("u_level"));
+				user.setU_level(rs.getInt("u_level"));
 				comment.setUser(user);
 				
 			}
