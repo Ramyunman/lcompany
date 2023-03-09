@@ -56,6 +56,10 @@ ${sessionScope.user}
 		<td>작성일자</td>
 		<td>${board.b_date }</td>
 	</tr>
+	<tr>
+		<td>level</td>
+		<td>${board.user.u_level }</td>
+	</tr>
 	
 	<tr style="height:50px;">
 			<td style="border:none;">
@@ -83,7 +87,7 @@ ${sessionScope.user}
 				<th>내용</th>
 				<th>작성일자</th>
 				<th>작성자</th>	
-						
+				<th>level</th>		
 			</tr>
 			
 			<c:forEach items="${commentList}" var="comment" varStatus="status">
@@ -107,6 +111,7 @@ ${sessionScope.user}
 				
 					<td>${comment.c_date}</td>
 					<td>${comment.user.u_name}</td>
+					<td>${comment.user.u_level}</td>
 					
 					<td>
 						<button type="button" class="btnComment">댓글</button>
