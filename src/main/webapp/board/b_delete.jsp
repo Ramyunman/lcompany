@@ -7,7 +7,7 @@
 <title>게시글 삭제</title>
 </head>
 <body>
-<h1>회원을 삭제했습니다.</h1>
+<h1>게시글을 삭제했습니다.</h1>
 <a href="/lcompany/board-list.do">돌아가기</a>
 </body>
 </html>

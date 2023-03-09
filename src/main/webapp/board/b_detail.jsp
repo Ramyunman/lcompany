@@ -70,29 +70,39 @@ ${sessionScope.user}
 			</td>
 		</tr>	--%>
 	<c:choose>
-		<c:when test="${sessionScope.u_level == 9 }">
+		<c:when test="${sessionScope.u_level == 9 and board.u_idx == sessionScope.u_idx}">
+	 		<!-- 관리자이고 작성자일 경우 -->
 	 		<tr style="height:50px;">
+				<td style="border:none;">
+					<a href="/lcompany/board-update.do?b_idx=${board.b_idx}" style="width:70%;font-weight:700;background-color:#818181;color:#fff;">수정</a>
+				</td>
 				<td style="border:none;">
 					<a href="/lcompany/board-delete.do?b_idx=${board.b_idx}" style="width:70%;font-weight:700;background-color:red;color:#fff;">삭제</a>
 				</td>
 			</tr>
 		</c:when>
-		<c:when test = "${sessionScope.u_level == 1 }">
-			<!-- u_level이 1일때는 수정/삭제 버튼을 모두 숨김 -->
+		<c:when test="${sessionScope.u_level == 9 and board.u_idx != sessionScope.u_idx}">
+    		<!-- 관리자이고 작성자가 아닐 경우 -->
+    		<tr style="height:50px;">
+    			<td style="border:none;">
+					<a href="/lcompany/board-delete.do?b_idx=${board.b_idx}" style="width:70%;font-weight:700;background-color:red;color:#fff;">삭제</a>
+				</td>
+			</tr>
+  		</c:when>
+  		<c:when test="${sessionScope.u_level == 1 and board.u_idx != sessionScope.u_idx}">
+    		<!-- 일반회원이고 작성자가 아닐 경우 -->
+  		</c:when>
+		<c:when test = "${sessionScope.u_level == 1 and board.u_idx == sessionScope.u_idx}">
+			<!-- 일반회원이고 작성자일 경우 -->
+			<tr style="height:50px;">
+      			<td style="border:none;">
+        			<a href="/lcompany/board-update.do?b_idx=${board.b_idx}" style="width:70%;font-weight:700;background-color:#818181;color:#fff;">수정</a>
+      			</td>
+      			<td style="border:none;">
+        			<a href="/lcompany/board-delete.do?b_idx=${board.b_idx}" style="width:70%;font-weight:700;background-color:red;color:#fff;">삭제</a>		
+      			</td>
+    		</tr>
 		</c:when>
-		<c:otherwise>
-			<!-- 작성자와 로그인한 사용자가 일치하면 수정/삭제 버튼을 모두 보이도록 구현 -->
-			<c:if test="${board.u_idx == sessionScope.u_idx }">
-				<tr style="height:50px;">
-					<td style="border:none;">
-						<a href="/lcompany/board-update.do?b_idx=${board.b_idx}" style="width:70%;font-weight:700;background-color:#818181;color:#fff;">수정</a>
-					</td>
-					<td style="border:none;">
-						<a href="/lcompany/board-delete.do?b_idx=${board.b_idx}" style="width:70%;font-weight:700;background-color:red;color:#fff;">삭제</a>
-					</td>
-				</tr>
-			</c:if>
-		</c:otherwise>
 	</c:choose>
 			
 	</table>
