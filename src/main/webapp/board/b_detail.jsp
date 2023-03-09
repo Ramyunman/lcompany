@@ -53,6 +53,10 @@ ${sessionScope.user}
 		<td>${board.user.u_name}</td>
 	</tr>
 	<tr>
+		<td>id</td>
+		<td>${board.user.u_id}</td>
+	</tr>
+	<tr>
 		<td>작성일자</td>
 		<td>${board.b_date }</td>
 	</tr>
@@ -61,16 +65,8 @@ ${sessionScope.user}
 		<td>${board.user.u_level }</td>
 	</tr>
 	
-	<%-- <tr style="height:50px;">
-			<td style="border:none;">
-				<a href="/lcompany/board-update.do?b_idx=${board.b_idx}" style="width:70%;font-weight:700;background-color:#818181;color:#fff;">수정</a>
-			</td>
-			<td style="border:none;">
-				<a href="/lcompany/board-delete.do?b_idx=${board.b_idx}" style="width:70%;font-weight:700;background-color:red;color:#fff;">삭제</a>
-			</td>
-		</tr>	--%>
 	<c:choose>
-		<c:when test="${sessionScope.u_level == 9 and board.u_idx == sessionScope.u_idx}">
+		<c:when test="${sessionScope.u_level == 9 and board.user.u_id == sessionScope.u_id}">
 	 		<!-- 관리자이고 작성자일 경우 -->
 	 		<tr style="height:50px;">
 				<td style="border:none;">
@@ -81,7 +77,7 @@ ${sessionScope.user}
 				</td>
 			</tr>
 		</c:when>
-		<c:when test="${sessionScope.u_level == 9 and board.u_idx != sessionScope.u_idx}">
+		<c:when test="${sessionScope.u_level == 9 and board.user.u_id != sessionScope.u_id}">
     		<!-- 관리자이고 작성자가 아닐 경우 -->
     		<tr style="height:50px;">
     			<td style="border:none;">
@@ -89,10 +85,10 @@ ${sessionScope.user}
 				</td>
 			</tr>
   		</c:when>
-  		<c:when test="${sessionScope.u_level == 1 and board.u_idx != sessionScope.u_idx}">
+  		<c:when test="${sessionScope.u_level == 1 and board.user.u_id != sessionScope.u_id}">
     		<!-- 일반회원이고 작성자가 아닐 경우 -->
   		</c:when>
-		<c:when test = "${sessionScope.u_level == 1 and board.u_idx == sessionScope.u_idx}">
+		<c:when test = "${sessionScope.u_level == 1 and board.user.u_id == sessionScope.u_id}">
 			<!-- 일반회원이고 작성자일 경우 -->
 			<tr style="height:50px;">
       			<td style="border:none;">

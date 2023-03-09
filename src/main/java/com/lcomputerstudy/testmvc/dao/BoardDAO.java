@@ -173,7 +173,7 @@ public class BoardDAO {
 			conn = DBConnection.getConnection();
 			String query = new StringBuilder()
 					.append("SELECT        ta.*, \n")
-					.append("              tb.u_name, u_level \n")
+					.append("              tb.u_name, u_level, u_id \n")
 					.append("FROM          board ta \n")
 					.append("LEFT JOIN     user tb ON ta.u_idx = tb.u_idx \n")
 					.append("WHERE 		   b_idx = ?")
@@ -197,6 +197,7 @@ public class BoardDAO {
 				User user = new User();
 				user.setU_name(rs.getString("u_name"));
 				user.setU_level(rs.getInt("u_level"));		//u_level이 보이게 하는것 추가
+				user.setU_id(rs.getString("u_id"));
 				resultBoard.setUser(user);
 				
 			}

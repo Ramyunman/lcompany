@@ -151,6 +151,7 @@ public class Controller extends HttpServlet {
 					session.setAttribute("user", user);
 					session.setAttribute("u_idx", user.getU_idx());	// 세선에 u_idx 저장
 					session.setAttribute("u_level", user.getU_level());	// u_level 값을 세션에 저장
+					session.setAttribute("u_id", user.getU_id());
 					view = "user/login-result";
 				} else {
 					view = "user/login-fail";
