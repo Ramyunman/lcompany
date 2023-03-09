@@ -37,7 +37,7 @@ public class CommentDAO {
 			conn = DBConnection.getConnection();
 			String query = new StringBuilder()
 					.append("SELECT        ta.*, \n")
-					.append("              tb.u_name, u_level \n")
+					.append("              tb.u_name, u_level, u_id \n")
 					.append("FROM          comment ta \n")
 					.append("LEFT JOIN     user tb ON ta.u_idx = tb.u_idx \n")
 					.append("WHERE 		   b_idx = ? \n")
@@ -60,9 +60,10 @@ public class CommentDAO {
 								
 				commentList.add(comment);
 				
-				User user = new User();
+				User user = new User();		//user꺼 불러옴.
 				user.setU_name(rs.getString("u_name"));
 				user.setU_level(rs.getInt("u_level"));
+				user.setU_id(rs.getString("u_id"));
 				comment.setUser(user);
 				
 			}
