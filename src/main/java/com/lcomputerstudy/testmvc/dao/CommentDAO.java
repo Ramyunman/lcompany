@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import com.lcomputerstudy.testmvc.database.DBConnection;
 import com.lcomputerstudy.testmvc.vo.Comment;
 import com.lcomputerstudy.testmvc.vo.User;
@@ -79,16 +81,17 @@ public class CommentDAO {
 		return commentList;
 	}
 	
-	public void insertComment(Comment comment) {		// 댓글 목록에 원댓글 넣기
+	public void insertComment(Comment comment, HttpSession session) {		// 댓글 목록에 원댓글 넣기
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			conn = DBConnection.getConnection();	
-			String sql = "INSERT INTO comment(c_content, c_date, b_idx, c_group, c_order, c_depth) values (?,now(),?,0,1,0)";		
+			String sql = "INSERT INTO comment(c_content, c_date, b_idx, u_idx, c_group, c_order, c_depth) values (?,now(),?,?,0,1,0)";		
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, comment.getC_content());
 			pstmt.setInt(2, comment.getB_idx());
+			pstmt.setInt(3, (int)session.getAttribute("u_idx"));
 			pstmt.executeUpdate();
 			pstmt.close();
 			
@@ -108,7 +111,7 @@ public class CommentDAO {
 		
 	}
 	
-	public void commentInComments(Comment comment) {	// 댓글 목록 안에 있는 댓글에 댓글달기(대댓글 달기)
+	public void commentInComments(Comment comment, HttpSession session) {	// 댓글 목록 안에 있는 댓글에 댓글달기(대댓글 달기)
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
@@ -121,13 +124,14 @@ public class CommentDAO {
 			pstmt.executeUpdate();
 			pstmt.close();
 			
-			sql = "INSERT INTO comment(c_content, c_date, b_idx, c_group, c_order, c_depth) values (?,now(),?,?,?,?)";
+			sql = "INSERT INTO comment(c_content, c_date, b_idx, u_idx, c_group, c_order, c_depth) values (?,now(),?,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, comment.getC_content());
 			pstmt.setInt(2, comment.getB_idx());
-			pstmt.setInt(3, comment.getC_group());
-			pstmt.setInt(4, comment.getC_order() + 1);
-			pstmt.setInt(5, comment.getC_depth() + 1);
+			pstmt.setInt(3, (int)session.getAttribute("u_idx"));
+			pstmt.setInt(4, comment.getC_group());
+			pstmt.setInt(5, comment.getC_order() + 1);
+			pstmt.setInt(6, comment.getC_depth() + 1);
 			pstmt.executeUpdate();
 			
 		} catch (Exception ex) {

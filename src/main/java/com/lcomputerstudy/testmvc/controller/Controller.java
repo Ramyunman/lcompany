@@ -299,12 +299,13 @@ public class Controller extends HttpServlet {
 				
 			/////////////////comment						
 			case "/comment-original-insert-process.do":		// b_detail에 댓글 달기
+				session = request.getSession();	//세션 생성 코드
 				comment = new Comment();
 				comment.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				comment.setC_content(request.getParameter("c_content"));
 			
 				commentService = CommentService.getInstance();
-				commentService.insertComment(comment);
+				commentService.insertComment(comment,session);
 				
 				commentList = commentService.getComments(comment.getB_idx());		//받아왔던 목록을 다시 넘겨줌.
 				request.setAttribute("commentList", commentList);					//jsp에게로 commenList를 넘겨줌
@@ -312,6 +313,7 @@ public class Controller extends HttpServlet {
 				break;
 		
 			case "/comment-commentInComments.do":	// b_detail 댓글 목록의 댓글에 댓글 달기
+				session = request.getSession();	//세션 생성 코드
 				comment = new Comment();
 				comment.setB_idx(Integer.parseInt(request.getParameter("b_idx")));
 				comment.setC_content(request.getParameter("c_content"));
@@ -320,7 +322,7 @@ public class Controller extends HttpServlet {
 				comment.setC_depth(Integer.parseInt(request.getParameter("c_depth")));
 				
 				commentService = CommentService.getInstance();
-				commentService.commentInComments(comment);
+				commentService.commentInComments(comment,session);
 				
 				commentList = commentService.getComments(comment.getB_idx());		//받아왔던 목록을 다시 넘겨줌.
 				request.setAttribute("commentList", commentList);					//jsp에게로 commenList를 넘겨줌

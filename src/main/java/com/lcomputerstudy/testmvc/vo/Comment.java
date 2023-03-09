@@ -8,7 +8,9 @@ public class Comment {
 	private int c_order;
 	private int c_depth;
 	private int b_idx;
+	private int u_idx;	// 추가
 	private User user;
+	
 	
 	public int getC_idx() {
 		return c_idx;
@@ -51,6 +53,12 @@ public class Comment {
 	}
 	public void setB_idx(int b_idx) {
 		this.b_idx = b_idx;
+	}
+	public int getU_idx() {
+		return u_idx;
+	}
+	public void setU_idx(int u_idx) {
+		this.u_idx = u_idx;
 	}
 	public User getUser() {
 		return user;
