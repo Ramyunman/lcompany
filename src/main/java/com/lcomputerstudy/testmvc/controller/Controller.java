@@ -1,10 +1,9 @@
 package com.lcomputerstudy.testmvc.controller;
 
-import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,9 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 
 import com.lcomputerstudy.testmvc.service.BoardService;
 import com.lcomputerstudy.testmvc.service.CommentService;
@@ -229,48 +226,7 @@ public class Controller extends HttpServlet {
 				board.setB_content(request.getParameter("content"));
 				board.setB_views(Integer.parseInt(request.getParameter("views")));
 				board.setB_writer(request.getParameter("writer"));
-				
-				// 파일 저장 경로 설정
-				String savePath = "webapp/upload";		// 저장 경로를 자신이 원하는 경로로 수정 가능
-				File fileSaveDir = new File(savePath);
-				if (!fileSaveDir.exists()) {
-					fileSaveDir.mkdir();
-				}
-				
-				// FileItemFactory와 ServletFileUpload 객체 생성
-				DiskFileItemFactory factory = new DiskFileItemFactory();
-				ServletFileUpload upload = new ServletFileUpload(factory);
-				
-				// 업로드 용량 제한 설정 : 10MB
-				upload.setSizeMax(1024 * 1024 * 10);
-				
-				try {
-					// HTTP 요청으로부터 멀티파트 파일 데이터 추출
-					List<FileItem> items = upload.parseRequest(request);
-					
-					// 파일 업로드 처리
-					for (FileItem item : items) {
-						// 파일인 경우
-						if (!item.isFormField()) {
-							String fileName = new File(item.getName()).getName();
-							String filePath = savePath + File.separator + fileName;
-							File storeFile = new File(filePath);
-							
-							// 로컬 디스크에 파일 저장
-							item.write(storeFile);
-							board.setB_file(filePath);	// 게시글 객체에 파일 경로 저장
-						}
-						// 파일이 아닌 경우
-						else {
-							String fieldName = item.getFieldName();
-							String fieldValue = item.getString();
-							// ...필요한 로직 추가...
-						}
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-												
+																
 				boardService = BoardService.getInstance();
 				boardService.insertBoard(board, session);
 				view = "board/b_insert-result";

@@ -12,7 +12,7 @@
 
 <h2>게시글 등록</h2>
 
-<form action="board-insert-process.do" name="board" method="post" enctype="multipart/form-data">
+<form action="board-insert-process.do" name="board" method="post">
 	
 	<p> 제목 : <input type="text" name="title"></p>
 	<p> 내용 : </p> 
