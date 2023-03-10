@@ -107,7 +107,7 @@ public class BoardDAO {
 				board.setB_idx(rs.getInt("b_idx"));
 				board.setB_title(rs.getString("b_title"));
 				board.setB_content(rs.getString("b_content"));
-				board.setB_views(rs.getString("b_views"));
+				board.setB_views(rs.getInt("b_views"));
 				board.setB_date(rs.getString("b_date"));
 				board.setU_idx(rs.getInt("u_idx"));
 				board.setB_group(rs.getInt("b_group"));
@@ -187,7 +187,7 @@ public class BoardDAO {
 				resultBoard.setB_idx(Integer.parseInt(rs.getString("b_idx")));
 				resultBoard.setB_title(rs.getString("b_title"));
 				resultBoard.setB_content(rs.getString("b_content"));
-				resultBoard.setB_views(rs.getString("b_views"));
+				resultBoard.setB_views(rs.getInt("b_views"));
 				resultBoard.setB_date(rs.getString("b_date"));	
 				resultBoard.setU_idx(rs.getInt("u_idx"));	// u_idx 추가
 				resultBoard.setB_group(Integer.parseInt(rs.getString("b_group")));		

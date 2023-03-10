@@ -11,14 +11,18 @@
 <body>
 
 <h2>게시글 등록</h2>
-${sessionScope.user}
-<form action="board-insert-process.do" name="board" method="post">
+
+<form action="board-insert-process.do" name="board" method="post" enctype="multipart/form-data">
+	
 	<p> 제목 : <input type="text" name="title"></p>
 	<p> 내용 : </p> 
 	<textarea name="content" rows="10" cols="50"></textarea> 
+	<p> <input type="file" name="b_file"> </p>
 		
 	<p> <input type="submit" value="등록하기"></p>
+	
 </form>
+
 
 </body>
 </html>
