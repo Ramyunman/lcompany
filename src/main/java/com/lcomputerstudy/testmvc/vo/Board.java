@@ -14,7 +14,7 @@ public class Board {
 	private int b_order;	// 답글
 	private int b_depth;	// 답글
 	private User user;
-	private String b_file;	// 파일 추가
+	private String b_fileName;	// 파일 추가
 	
 	public int getB_idx() {
 		return b_idx;
@@ -94,11 +94,12 @@ public class Board {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public String getB_file() {
-		return b_file;
+	public String getB_fileName() {
+		return b_fileName;
 	}
-	public void setB_file(String b_file) {
-		this.b_file = b_file;
+	public void setB_fileName(String b_fileName) {
+		this.b_fileName = b_fileName;
 	}
+
 		
 }
