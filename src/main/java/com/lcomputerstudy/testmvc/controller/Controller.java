@@ -1,6 +1,5 @@
 package com.lcomputerstudy.testmvc.controller;
 
-import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -26,7 +25,6 @@ import com.lcomputerstudy.testmvc.vo.Search;
 import com.lcomputerstudy.testmvc.vo.User;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-import com.oreilly.servlet.multipart.Part;
 
 @WebServlet("*.do")
 public class Controller extends HttpServlet {
