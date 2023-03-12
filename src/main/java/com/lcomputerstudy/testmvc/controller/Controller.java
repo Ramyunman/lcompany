@@ -1,5 +1,6 @@
 package com.lcomputerstudy.testmvc.controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -23,6 +24,9 @@ import com.lcomputerstudy.testmvc.vo.Comment;
 import com.lcomputerstudy.testmvc.vo.Pagination;
 import com.lcomputerstudy.testmvc.vo.Search;
 import com.lcomputerstudy.testmvc.vo.User;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import com.oreilly.servlet.multipart.Part;
 
 @WebServlet("*.do")
 public class Controller extends HttpServlet {
@@ -219,17 +223,40 @@ public class Controller extends HttpServlet {
 				view = "board/b_insert";
 				break;
 				
-			case "/board-insert-process.do":		//실제 저장하는 코드 -> 있는 이유 : 이게 있어야 저장이 된다. 위에 하나만 있으면 시작하자마자 바로 저장이 되어서 입력할수가 없다.
-				session = request.getSession();		//세션 생성 코드
-				board = new Board();
-				board.setB_title(request.getParameter("title"));
-				board.setB_content(request.getParameter("content"));
-				board.setB_views(Integer.parseInt(request.getParameter("views")));
-				board.setB_writer(request.getParameter("writer"));
-																
-				boardService = BoardService.getInstance();
-				boardService.insertBoard(board, session);
-				view = "board/b_insert-result";
+			case "/board-insert-process.do":		
+				try {
+					String savePath = "C:\\Users\\user\\Documents\\workspace-spring-tool-suite-4-4.16.1.RELEASE\\lcompany\\src\\main\\webapp\\upload";
+					int maxSize = 10 * 1024 * 1024; // 최대 업로드 파일 크기를 10MB로 제한한다.
+					String encoding = "UTF-8";
+					MultipartRequest multi = new MultipartRequest(request, savePath, maxSize, encoding, new DefaultFileRenamePolicy());
+				
+					//Board 객체 생성
+					board = new Board();
+				
+					// Board 객체에 파일 이름 설정
+					String b_fileName = multi.getFilesystemName("b_fileName");
+					if (b_fileName != null) {
+						board.setB_fileName(b_fileName);
+					} else {
+						board.setB_fileName("");		//업로드된 파일이 없는 경우
+					}
+											
+					// 나머지 Board 객체 설정
+					board.setB_title(multi.getParameter("title"));
+					board.setB_content(multi.getParameter("content"));
+				
+					// BoardService를 통해 Board 객체를 DB에 저장
+					session = request.getSession();	//세션 생성 코드
+					boardService = BoardService.getInstance();
+					boardService.insertBoard(board, session);
+				
+					// 결과 페이지로 이동
+					view = "board/b_insert-result";
+				} catch (Exception e) {
+					e.printStackTrace();
+					// 에러 페이지로 이동
+					view = "error.jsp";
+				}
 				break;
 				
 			case "/board-detail.do":		// board 상세정보
@@ -375,13 +402,13 @@ public class Controller extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String[] authList = {
-				"/user-list.do",
-				// "/user-insert.do"
-				//, "/user-insert-process.do"
+				"/user-list.do"
+				,"/user-insert.do"
+				, "/user-insert-process.do"
 				//, "/user-detail.do"
 				//, "/user-edit.do"
 				//, "/user-edit-process.do"
-				"/logout.do"
+				,"/logout.do"
 		};
 		
 		for (String item : authList) {

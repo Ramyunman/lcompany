@@ -1,0 +1,168 @@
+	public static void main(String[] args) {
+		while(true) {
+			VendingMachine vd = null;
+			
+			vd = PickService.form();
+			PickService.pick(vd);
+			
+			if (vd.isPick()) {
+				PickService.success(vd);
+				break;
+			}
+			
+			System.out.println("돈이 부족합니다.\n");
+		}
+		
+		System.out.println("0. 시작");
+		System.out.println("9. 종료");
+		
+
+	}
+
+}
+
+class PickService {
+	
+	Beverage beverages;
+	private static int count = 0;
+	int index = 0;
+	
+	public static void pick(VendingMachine vd) {
+		try {
+			
+			if(!Beverage.values().equals(vd.getNum())) {
+				throw new NumMismatchException("잘못된 번호를 입력하였습니다.");
+				
+			} else if (!Beverage.values().equals(vd.getCash())) {
+				throw new CashMismatchException("잘못된 금액을 입력하였습니다.");
+				
+			} else {
+				vd.setPick(true);
+			}
+		} catch (NumMismatchException e) {
+			System.out.println(e.getMessage());
+			System.out.println("번호는 1~5까지 입니다. 다시 선택해 주세요.");
+			
+		} catch (CashMismatchException e) {
+			System.out.println(e.getMessage());
+			System.out.println("음료에 맞는 금액을 입금해주세요.");
+			
+		} catch (Exception e) {
+			System.out.println("시스템 장애");
+			
+		} finally {
+			increaseCount();
+		}
+	}
+	
+	public static VendingMachine form() {
+		Scanner scanner = new Scanner(System.in);
+		VendingMachine vd = new VendingMachine();
+		
+		System.out.println("<< 음료수 자판기 >>");
+		System.out.print("음료수 번호를 입력하세요: 1.포카리스웨트(1500원), 2.게토레이(1100원), 3.레드불(2000원), 4.데미소다(1300원), 5.펩시콜라(1200원)");
+		vd.setNum(scanner.nextInt());
+		System.out.print("금액을 입력하세요: ");
+		vd.setCash(scanner.nextInt());
+		
+		return vd;
+	}
+	
+	public static void success(VendingMachine vd) {
+		System.out.println("맛있게 드세요.");
+	}
+	
+	public static void increaseCount() {
+		count++;
+		System.out.println("음료수 뽑기 시도 " + count + "회");
+	}
+		
+}
+
+enum Beverage {
+	PocariSweat(1),
+	Gatorade(2), 
+	RedBull(3), 
+	Demisoda(4), 
+	PepsiCola(5);
+	
+	public final int code;
+	int moneytoPay = 0;
+	
+	Beverage(int code) {
+		this.code = code;
+	}
+	
+	public int getInt() {
+		
+		switch(code) {
+		case 1: moneytoPay = 1500;
+		break;
+		case 2: moneytoPay = 1100;
+		break;
+		case 3: moneytoPay = 2000;
+		break;
+		case 4: moneytoPay = 1300;
+		break;
+		case 5: moneytoPay = 1200;
+		break;
+		
+		}
+		
+		return moneytoPay;
+	}
+	
+
+}
+
+class VendingMachine {
+	private int num;
+	private int cash;
+	private Beverage beverage;
+	private boolean pick;
+	
+	public int getBeverage() {		//음료수 이름을 원으로 바꾸기
+		return beverage.getInt();
+	}
+
+	public void setBeverage(Beverage beverage) {
+		this.beverage = beverage;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
+	public int getCash() {
+		return cash;
+	}
+
+	public void setCash(int cash) {
+		this.cash = cash;
+	}
+
+	public boolean isPick() {
+		return pick;
+	}
+	
+	public void setPick(boolean pick) {
+		this.pick = pick;
+	}
+		
+}
+
+class NumMismatchException extends Exception {
+	public NumMismatchException(String message) {
+		super(message);
+	}
+}
+
+class CashMismatchException extends Exception {
+	public CashMismatchException(String message) {
+		super(message);
+	}
+}

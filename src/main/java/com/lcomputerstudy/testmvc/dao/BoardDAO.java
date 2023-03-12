@@ -138,11 +138,12 @@ public class BoardDAO {
 		
 		try {
 			conn = DBConnection.getConnection();
-			String sql = "insert into board(b_title, b_content, b_views, b_date, u_idx, b_group, b_order, b_depth) values (?,?,0,now(),?,0,1,0)";
+			String sql = "insert into board(b_title, b_content, b_views, b_date, u_idx, b_fileName, b_group, b_order, b_depth) values (?,?,0,now(),?,?,0,1,0)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, board.getB_title());
 			pstmt.setString(2, board.getB_content());
-			pstmt.setInt(3, (int)session.getAttribute("u_idx"));	
+			pstmt.setInt(3, (int)session.getAttribute("u_idx"));
+			pstmt.setString(4, board.getB_fileName());
 			pstmt.executeUpdate();
 			pstmt.close();
 			
