@@ -132,7 +132,7 @@ public class BoardDAO {
 		return list;
 	}
 	
-	public void insertBoard(Board board, HttpSession session) {		// 등록
+	public void insertBoard(Board board) {		// 등록
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
@@ -142,7 +142,7 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, board.getB_title());
 			pstmt.setString(2, board.getB_content());
-			pstmt.setInt(3, (int)session.getAttribute("u_idx"));
+			pstmt.setInt(3, board.getUser().getU_idx());
 			pstmt.setString(4, board.getB_fileName());
 			pstmt.setString(5, board.getB_filePath());
 			pstmt.executeUpdate();

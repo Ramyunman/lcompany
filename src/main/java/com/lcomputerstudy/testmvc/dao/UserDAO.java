@@ -250,6 +250,9 @@ public class UserDAO {
 				user.setU_id(rs.getString("u_id"));
 				user.setU_name(rs.getString("u_name"));
 				user.setU_level(rs.getInt("u_level"));		//level 추가
+				user.setU_age(rs.getString("u_age"));
+				user.setU_tel(rs.getString("u_tel"));
+				
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();

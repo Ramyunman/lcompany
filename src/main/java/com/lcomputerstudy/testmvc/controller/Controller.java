@@ -155,9 +155,9 @@ public class Controller extends HttpServlet {
 				if(user != null) {
 					// 세선에 사용자 정보 저장
 					session.setAttribute("user", user);
-					session.setAttribute("u_idx", user.getU_idx());	// 세선에 u_idx 저장
-					session.setAttribute("u_level", user.getU_level());	// u_level 값을 세션에 저장
-					session.setAttribute("u_id", user.getU_id());
+//					session.setAttribute("u_idx", user.getU_idx());	// 세선에 u_idx 저장
+//					session.setAttribute("u_level", user.getU_level());	// u_level 값을 세션에 저장
+//					session.setAttribute("u_id", user.getU_id());
 					view = "user/login-result";
 				} else {
 					view = "user/login-fail";
@@ -249,11 +249,13 @@ public class Controller extends HttpServlet {
 					
 				
 					// BoardService를 통해 Board 객체를 DB에 저장
-					session = request.getSession();	//세션 생성 코드
-					//user = (User)session.getAttribute("user");
-					//board.setUser(user);
+					//session = request.getSession();	//세션 생성 코드
+					user = (User)request.getSession().getAttribute("user");
+					board.setUser(user);
+					
+					// BoardService를 통해 Board객체를 DB에 저장
 					boardService = BoardService.getInstance();
-					boardService.insertBoard(board, session);
+					boardService.insertBoard(board);
 				
 					// 결과 페이지로 이동
 					view = "board/b_insert-result";
