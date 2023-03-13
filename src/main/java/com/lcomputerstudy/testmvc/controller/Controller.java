@@ -224,8 +224,9 @@ public class Controller extends HttpServlet {
 			case "/board-insert-process.do":		
 				try {
 					String rootPath = System.getProperty("user.home");
-					String savePath = rootPath + "/Documents/work12/lcompany/src/main/webapp/upload";
-				
+			// 학원	String savePath = rootPath + "/Documents/work12/lcompany/src/main/webapp/upload";  
+					String savePath = rootPath + "/Documents/workspace-spring-tool-suite-4-4.16.1.RELEASE/lcompany/src/main/webapp/upload";  //집
+					
 					int maxSize = 10 * 1024 * 1024; // 최대 업로드 파일 크기를 10MB로 제한한다.
 					String encoding = "UTF-8";
 					MultipartRequest multi = new MultipartRequest(request, savePath, maxSize, encoding, new DefaultFileRenamePolicy());
