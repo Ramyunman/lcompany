@@ -111,6 +111,10 @@ ${sessionScope.user}
 			<button type="button" class="o_btnComment-register">등록</button>
 			<button type="button" class="o_btnComment-cancel">취소</button>
 		</div>
+		
+	<c:if test="${not empty board.b_fileName}">
+  		<img src="http://localhost:8080/lcompany/upload/${board.b_fileName}" alt="첨부파일">
+	</c:if>
 	
 	<h3>댓글 목록</h3>
 		<table id="commentList">

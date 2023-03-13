@@ -223,7 +223,9 @@ public class Controller extends HttpServlet {
 				
 			case "/board-insert-process.do":		
 				try {
-					String savePath = "C:\\Users\\user\\Documents\\workspace-spring-tool-suite-4-4.16.1.RELEASE\\lcompany\\src\\main\\webapp\\upload";
+					String rootPath = System.getProperty("user.home");
+					String savePath = rootPath + "/Documents/work12/lcompany/src/main/webapp/upload";
+				
 					int maxSize = 10 * 1024 * 1024; // 최대 업로드 파일 크기를 10MB로 제한한다.
 					String encoding = "UTF-8";
 					MultipartRequest multi = new MultipartRequest(request, savePath, maxSize, encoding, new DefaultFileRenamePolicy());
@@ -231,20 +233,25 @@ public class Controller extends HttpServlet {
 					//Board 객체 생성
 					board = new Board();
 				
-					// Board 객체에 파일 이름 설정
+					// Board 객체에 파일 이름 및 파일 경로 설정
 					String b_fileName = multi.getFilesystemName("b_fileName");
 					if (b_fileName != null) {
 						board.setB_fileName(b_fileName);
+						board.setB_filePath(savePath + "/" + b_fileName);	// 파일 경로 설정 
 					} else {
 						board.setB_fileName("");		//업로드된 파일이 없는 경우
+						board.setB_filePath("");		//업도르된 파일이 없는 경우
 					}
 											
 					// 나머지 Board 객체 설정
 					board.setB_title(multi.getParameter("title"));
 					board.setB_content(multi.getParameter("content"));
+					
 				
 					// BoardService를 통해 Board 객체를 DB에 저장
 					session = request.getSession();	//세션 생성 코드
+					//user = (User)session.getAttribute("user");
+					//board.setUser(user);
 					boardService = BoardService.getInstance();
 					boardService.insertBoard(board, session);
 				

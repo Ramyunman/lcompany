@@ -15,6 +15,7 @@ public class Board {
 	private int b_depth;	// 답글
 	private User user;
 	private String b_fileName;	// 파일 추가
+	private String b_filePath;	// 파일 경로 추가
 	
 	public int getB_idx() {
 		return b_idx;
@@ -99,6 +100,12 @@ public class Board {
 	}
 	public void setB_fileName(String b_fileName) {
 		this.b_fileName = b_fileName;
+	}
+	public String getB_filePath() {
+		return b_filePath;
+	}
+	public void setB_filePath(String b_filePath) {
+		this.b_filePath = b_filePath;
 	}
 
 		

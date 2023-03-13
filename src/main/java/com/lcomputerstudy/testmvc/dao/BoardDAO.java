@@ -138,12 +138,13 @@ public class BoardDAO {
 		
 		try {
 			conn = DBConnection.getConnection();
-			String sql = "insert into board(b_title, b_content, b_views, b_date, u_idx, b_fileName, b_group, b_order, b_depth) values (?,?,0,now(),?,?,0,1,0)";
+			String sql = "insert into board(b_title, b_content, b_views, b_date, u_idx, b_fileName, b_filePath, b_group, b_order, b_depth) values (?,?,0,now(),?,?,?,0,1,0)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, board.getB_title());
 			pstmt.setString(2, board.getB_content());
 			pstmt.setInt(3, (int)session.getAttribute("u_idx"));
 			pstmt.setString(4, board.getB_fileName());
+			pstmt.setString(5, board.getB_filePath());
 			pstmt.executeUpdate();
 			pstmt.close();
 			
@@ -191,6 +192,7 @@ public class BoardDAO {
 				resultBoard.setB_views(rs.getInt("b_views"));
 				resultBoard.setB_date(rs.getString("b_date"));	
 				resultBoard.setU_idx(rs.getInt("u_idx"));	// u_idx 추가
+				resultBoard.setB_fileName(rs.getNString("b_fileName"));	// file upload 추가
 				resultBoard.setB_group(Integer.parseInt(rs.getString("b_group")));		
 				resultBoard.setB_order(Integer.parseInt(rs.getString("b_order")));		
 				resultBoard.setB_depth(Integer.parseInt(rs.getString("b_depth")));		
